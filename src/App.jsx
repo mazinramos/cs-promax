@@ -206,13 +206,40 @@ const initialData = [
   {
     id: 3, title: "Semester 03", year: "Sophomore",
     subjects: [
-      { name: "Calculus II", code: "MATH201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Statistics", code: "STAT201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Linear Algebra", code: "MATH202", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Calculus II", code: "MATH201", lectures: [
+  { title: "Full Course Notes", type: "pdf", link: "https://drive.google.com/file/d/10F5uzxD7uIjC57I_lN9-zR6f5AwjVKGX/view?usp=drivesdk", note: "مقرر الحسبان (نوتة شاملة)" }
+], videos: [], labs: [], assignments: [] },
+      { name: "Statistics", code: "STAT201", lectures: [
+  { title: "Lec 1: Introduction to Statistics", type: "pdf", link: "https://drive.google.com/file/d/1WhpvG29H6ErnIga1yz0B_UQyj_3nFZ79/view?usp=drivesdk", note: "Basic Concepts & Introduction" },
+  { title: "Lec 2: Branches of Statistics", type: "pdf", link: "https://drive.google.com/file/d/1uCO22nmKzUsIsX-k471E9DW_0OeZuO6C/view?usp=drivesdk", note: "Descriptive vs Inferential Statistics" },
+  { title: "Lec 3: Data Presentation", type: "pdf", link: "https://drive.google.com/file/d/1EoNSP3Ohng-hS7m5NokdQCJNjduP7Lm0/view?usp=drivesdk", note: "Tabulation & Graphical Representation" },
+  { title: "Lec 4: Descriptive Measures", type: "pdf", link: "https://drive.google.com/file/d/1rANMgZebtl43zBKmHyTJxSPFkfcJY1u0/view?usp=drivesdk", note: "Measures of Central Tendency & Dispersion" },
+  { title: "Lec 5: Grouped Data", type: "pdf", link: "https://drive.google.com/file/d/11PCpIX-b3nqm2JljLoIRtd1ajUAFnVOD/view?usp=drivesdk", note: "Frequency Distributions Analysis" },
+  { title: "Lec 6: Probability Distributions", type: "pdf", link: "https://drive.google.com/file/d/1DvYejbepMiiJizQAaXLM9Idsg6Qgp-8X/view?usp=drivesdk", note: "Fundamentals of Probability" },
+  { title: "Lec 7: Conditional Probability", type: "pdf", link: "https://drive.google.com/file/d/1Ohmz_jdYL1ClMZvHr0_59JeC_svF_6g2/view?usp=drivesdk", note: "Conditional Probability Rules" },
+  { title: "Lec 8: Bayes Theorem", type: "pdf", link: "https://drive.google.com/file/d/10oXTZcyTE7bCAtaJIa-0DCozyPHADY_D/view?usp=drivesdk", note: "Application of Bayes Theorem" },
+  { title: "Lec 9: Random Variables", type: "pdf", link: "https://drive.google.com/file/d/1jVH8jYnFAZANJe-I2jkjgwwSfuUPr0bl/view?usp=drivesdk", note: "Discrete & Continuous Variables" },
+  { title: "Lec 10: Probability Functions", type: "pdf", link: "https://drive.google.com/file/d/1Sd2RzMDNjJOy-IuqSo7fdbLZIYBpZ_L0/view?usp=drivesdk", note: "Advanced Distribution Concepts" },
+  { title: "Lec 11: Continuous Distributions", type: "pdf", link: "https://drive.google.com/file/d/1Rew15AnXoG5SWk14JP4TyRaojNOm9A8i/view?usp=drivesdk", note: "PDF & CDF Functions" },
+  { title: "Lec 12: Standard Normal Distribution", type: "pdf", link: "https://drive.google.com/file/d/17oz39JNyvbbD3WasnQDrOBMLEM_jEpAT/view?usp=drivesdk", note: "Z-Scores & Normal Curve" }
+], videos: [], labs: [], assignments: [] },
+      { name: "Linear Algebra", code: "MATH202", lectures: [
+  { title: "Full Course Material", type: "pdf", link: "https://drive.google.com/file/d/1N50ZtpnDzMFjRrU6mxXWHEP5JuPtaI1v/view?usp=drivesdk", note: "مقرر الجبر الخطي (شامل)" }
+], videos: [], labs: [], assignments: [] },
       { name: "Prog. Methods II", code: "CS201", lectures: [], videos: [], labs: [], assignments: [] },
       { name: "Sys Analysis I", code: "IS201", lectures: [], videos: [], labs: [], assignments: [] },
       { name: "Comm. Skills", code: "GEN201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Digital Design", code: "CS202", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Digital Design", code: "CS202", lectures: [
+  { title: "Lec 1: Data Representation", type: "pdf", link: "https://drive.google.com/file/d/1myETzAxTFMlp-FXh3kWNJlLiUNpOWgwW/view?usp=drivesdk", note: "تمثيل البيانات في الأنظمة الرقمية" },
+  { title: "Lec 2: Real Numbers", type: "pdf", link: "https://drive.google.com/file/d/1nvQjAypYquNqTBDtUGtgcfYMgki68dMd/view?usp=drivesdk", note: "أنظمة الأعداد الحقيقية" },
+  { title: "Lec 3: Logical Operations", type: "pdf", link: "https://drive.google.com/file/d/1k3xbWG4ifZdSuhPoVhII99ld3cFPvRAB/view?usp=drivesdk", note: "العمليات والدوائر المنطقية" },
+  { title: "Lec 4: NAND Gate Sufficiency", type: "pdf", link: "https://drive.google.com/file/d/1jJEzn2whnDn9zBrOhA-scDBopsE7ZaBO/view?usp=drivesdk", note: "كفاية بوابة NAND الشاملة" },
+  { title: "Lec 5: Boolean Variables", type: "pdf", link: "https://drive.google.com/file/d/1k0qZUwdkPUTiW8hfaX9l_OO9u1GCBTIr/view?usp=drivesdk", note: "كتابة المتغيرات المنطقية" },
+  { title: "Lec 6: Advanced Logic", type: "pdf", link: "https://drive.google.com/file/d/1_mzdGZQx0660uzqd2EQZGTjO_dAmvcxZ/view?usp=drivesdk", note: "تابع العمليات المنطقية" },
+  { title: "Lec 7: Simplification (Part 1)", type: "pdf", link: "https://drive.google.com/file/d/1YWGb1HZ5glXQUvPPOsRtOH6NFL1Cm3vi/view?usp=drivesdk", note: "تبسيط المتغيرات المنطقية" },
+  { title: "Lec 8: Karnaugh Maps (K-Map)", type: "pdf", link: "https://drive.google.com/file/d/1YwJzCbvvPUykWXucKV-FSVZz-nDM63Ee/view?usp=drivesdk", note: "التبسيط باستخدام مخططات كارنو" },
+  { title: "Lec 9: 5-Variable K-Map", type: "pdf", link: "https://drive.google.com/file/d/1-rtb38fSmXNlsU0X2eUB9U2usKvOnV_N/view?usp=drivesdk", note: "مخططات كارنو لخمسة متغيرات" }
+], videos: [], labs: [], assignments: [] },
     ]
   },
   {
