@@ -2,161 +2,188 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X } from 'lucide-react';
 
 /* =================================================================================
-   1. PURE CSS STYLES (NO EXTERNAL LIBRARIES)
+   1. DATA & LOGIC
    ================================================================================= */
-const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@300;400;500;700&family=Tajawal:wght@300;400;500;700;800&display=swap');
+const initialData = [
+  { id: 1, title: "Semester 01", year: "Freshman", subjects: [{ name: "Intro to CS", code: "CS100", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Basic Mathematics", code: "MATH100", lectures: [], videos: [], labs: [], assignments: [] }, { name: "English I", code: "ENG101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Arabic I", code: "ARB101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Physics", code: "PHY101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Religious Culture", code: "REL101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Fundamentals", code: "CS102", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 2, title: "Semester 02", year: "Freshman", subjects: [{ name: "Arabic II", code: "ARB102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "English II", code: "ENG102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Religious Culture II", code: "REL102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Calculus I", code: "MATH101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Methods I", code: "CS103", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Sudanese Studies", code: "SUD101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Discrete Math", code: "MATH102", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 3, title: "Semester 03", year: "Sophomore", subjects: [
+      { name: "Calculus II", code: "MATH201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Statistics", code: "STAT201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Linear Algebra", code: "MATH202", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Prog. Methods II", code: "CS201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Sys Analysis I", code: "IS201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Comm. Skills", code: "GEN201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Digital Design", code: "CS202", lectures: [], videos: [], labs: [], assignments: [] }
+  ]},
+  { id: 4, title: "Semester 04", year: "Sophomore", subjects: [{ name: "Object Oriented Prog.", code: "CS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Data Structures", code: "CS204", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Database I", code: "IS204", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 5, title: "Semester 05", year: "Junior", subjects: [{ name: "Internet Tech I", code: "IT301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Computer Networks", code: "CN301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Database II", code: "IS301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Algorithms", code: "CS301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Visual Prog.", code: "CS302", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Microprocessors", code: "CS303", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Software Eng I", code: "SE301", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 6, title: "Semester 06", year: "Junior", subjects: [{ name: "Internet Tech II", code: "IT302", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Computer Arch.", code: "CS304", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operating Systems", code: "CS305", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Research Meth.", code: "GEN301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Software Eng II", code: "SE302", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Computer Graphics", code: "CS306", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Distributed DB", code: "IS302", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 7, title: "Semester 07", year: "Senior", subjects: [{ name: "Prog. Concepts", code: "CS401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "AI", code: "CS402", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Simulation", code: "CS403", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Elective Course I", code: "EL401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Elective Course II", code: "EL402", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Project I", code: "PROJ1", lectures: [], videos: [], labs: [], assignments: [] }] },
+  { id: 8, title: "Semester 08", year: "Senior", subjects: [{ name: "Ethical Issues", code: "GEN401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Networks Security", code: "CN401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Wireless Comp.", code: "CN402", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Concepts II", code: "CS404", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Project II", code: "PROJ2", lectures: [], videos: [], labs: [], assignments: [] }] }
+];
 
-  :root {
-    --gold: #FFD54F;
-    --dark-bg: #000000;
-    --panel-bg: rgba(18, 18, 18, 0.95);
-    --border-color: rgba(255, 213, 79, 0.15);
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
+/* --- INLINE STYLES FOR SAFETY --- */
+const styles = {
+  appContainer: {
+    backgroundColor: '#000000',
+    color: '#e0e0e0',
+    minHeight: '100vh',
+    fontFamily: '"Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+    direction: 'rtl',
+    position: 'relative',
+    overflowX: 'hidden',
+  },
+  matrix: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
+    pointerEvents: 'none',
+  },
+  contentWrapper: {
+    position: 'relative',
+    zIndex: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  navbar: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 100,
+    backgroundColor: 'rgba(10, 10, 10, 0.95)',
+    borderBottom: '1px solid #3E2723',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+    backdropFilter: 'blur(10px)',
+  },
+  navContainer: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '12px 16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '10px',
+  },
+  logoArea: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    cursor: 'pointer',
+  },
+  logoIcon: {
+    background: '#000',
+    border: '1px solid #FFD54F',
+    borderRadius: '8px',
+    padding: '6px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchArea: {
+    flex: 1,
+    maxWidth: '400px',
+    position: 'relative',
+    margin: '0 10px',
+  },
+  input: {
+    width: '100%',
+    backgroundColor: '#080808',
+    border: '1px solid #333',
+    color: '#fff',
+    padding: '10px 40px 10px 15px',
+    borderRadius: '8px',
+    fontFamily: 'inherit',
+    fontSize: '14px',
+  },
+  main: {
+    maxWidth: '1200px',
+    width: '100%',
+    margin: '0 auto',
+    padding: '20px 16px',
+    flex: 1,
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '20px',
+  },
+  card: {
+    backgroundColor: 'rgba(18, 18, 18, 0.95)',
+    border: '1px solid rgba(255, 213, 79, 0.15)',
+    borderRadius: '12px',
+    padding: '20px',
+    cursor: 'pointer',
+    transition: 'transform 0.2s',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    minHeight: '180px',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardHover: {
+    transform: 'translateY(-4px)',
+    borderColor: 'rgba(255, 213, 79, 0.5)',
+  },
+  headerPanel: {
+    backgroundColor: 'rgba(18, 18, 18, 0.95)',
+    border: '1px solid rgba(255, 213, 79, 0.15)',
+    borderRadius: '12px',
+    padding: '24px',
+    marginBottom: '24px',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  sectionTitle: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    borderRight: '4px solid #FFD54F',
+    paddingRight: '12px',
+  },
+  itemRow: {
+    backgroundColor: 'rgba(12, 12, 12, 0.8)',
+    border: '1px solid #333',
+    borderRadius: '8px',
+    padding: '16px',
+    marginBottom: '12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  btn: {
+    backgroundColor: '#FFD54F',
+    color: '#000',
+    border: 'none',
+    padding: '8px 16px',
+    borderRadius: '6px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '14px',
+  },
+  loginCard: {
+    maxWidth: '400px',
+    width: '100%',
+    margin: '40px auto',
+    padding: '30px',
+    backgroundColor: 'rgba(18, 18, 18, 0.95)',
+    borderTop: '4px solid #FFD54F',
+    borderRadius: '12px',
+    textAlign: 'center',
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Tajawal', sans-serif;
-    background-color: var(--dark-bg);
-    color: var(--text-primary);
-    overflow-x: hidden;
-    line-height: 1.5;
-  }
-
-  /* Utility Classes */
-  .font-cairo { font-family: 'Cairo', sans-serif; }
-  .font-code { font-family: 'Fira Code', monospace; }
-  .text-gold { color: var(--gold); }
-  .text-white { color: #fff; }
-  .text-gray { color: var(--text-secondary); }
-  .flex { display: flex; }
-  .flex-col { flex-direction: column; }
-  .items-center { align-items: center; }
-  .justify-between { justify-content: space-between; }
-  .justify-center { justify-content: center; }
-  .gap-2 { gap: 0.5rem; }
-  .gap-4 { gap: 1rem; }
-  .w-full { width: 100%; }
-  .text-center { text-align: center; }
-  .pointer { cursor: pointer; }
-  .relative { position: relative; }
-  .absolute { position: absolute; }
-  .hidden { display: none; }
-
-  /* Container */
-  .container-max {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  @media (min-width: 768px) { .container-max { padding: 0 24px; } }
-
-  /* Panels */
-  .dark-panel {
-    background: var(--panel-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-    transition: transform 0.2s ease, border-color 0.2s ease;
-    overflow: hidden;
-  }
-  .dark-panel:hover {
-    border-color: rgba(255, 213, 79, 0.5);
-    transform: translateY(-4px);
-  }
-
-  /* Grid System */
-  .grid-system {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 600px) { .grid-system { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
-  @media (min-width: 900px) { .grid-system { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
-  @media (min-width: 1200px) { .grid-system { grid-template-columns: repeat(4, 1fr); } }
-
-  /* Inputs */
-  .hacker-input {
-    background-color: #080808;
-    border: 1px solid #333;
-    color: #fff;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 600;
-    width: 100%;
-    padding: 12px 16px;
-    padding-right: 40px; /* Space for icon */
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-size: 16px;
-  }
-  .hacker-input:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 10px rgba(255, 213, 79, 0.2);
-  }
-
-  /* Navbar */
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #3E2723;
-    padding: 12px 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
-
-  /* Buttons */
-  .btn-gold {
-    background: var(--gold);
-    color: #000;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-    text-decoration: none; /* For links */
-    display: inline-block;
-    text-align: center;
-  }
-  .btn-gold:hover { background: #FFCA28; }
-
-  /* Animations */
-  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .animate-entry { animation: fadeInUp 0.5s ease-out forwards; }
-  
-  /* Helpers */
-  .icon-box {
-    background: #000;
-    border: 1px solid var(--gold);
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .badge {
-    background: rgba(255, 213, 79, 0.1);
-    border: 1px solid rgba(255, 213, 79, 0.3);
-    color: var(--gold);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-family: 'Fira Code', monospace;
-  }
-  
-  /* Responsive Visibility */
-  @media (min-width: 768px) { .md-block { display: block !important; } .md-flex { display: flex !important; } .md-hidden { display: none !important; } }
-  .hidden { display: none; }
-`;
+};
 
 /* =================================================================================
    2. MATRIX BACKGROUND
@@ -171,65 +198,204 @@ const InteractiveMatrix = () => {
     window.addEventListener('resize', resize);
     const columns = Math.floor(canvas.width / 20);
     const drops = Array(columns).fill(1);
-    const chars = "01<>"; 
+    const chars = "01CS_PROMAX<>";
     const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = '14px monospace';
       for (let i = 0; i < drops.length; i++) {
-        const x = i * 20; const y = drops[i] * 20;
-        ctx.fillStyle = Math.random() > 0.98 ? '#FFD54F' : '#222';
-        ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y);
-        if (y > canvas.height && Math.random() > 0.98) drops[i] = 0;
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillStyle = Math.random() > 0.98 ? '#FFD54F' : '#1a1a1a';
+        ctx.fillText(text, i * 20, drops[i] * 20);
+        if (drops[i] * 20 > canvas.height && Math.random() > 0.98) drops[i] = 0;
         drops[i]++;
       }
     };
     const interval = setInterval(draw, 50);
     return () => { clearInterval(interval); window.removeEventListener('resize', resize); };
   }, []);
-  return <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }} />;
+  return <canvas ref={canvasRef} style={styles.matrix} />;
 };
 
 /* =================================================================================
-   3. DATA (FULL 8 SEMESTERS)
+   3. COMPONENTS
    ================================================================================= */
-const initialData = [
-  { id: 1, title: "Semester 01", year: "Freshman", subjects: [{ name: "Intro to CS", code: "CS100", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Basic Mathematics", code: "MATH100", lectures: [{title: "Limits", type: "pdf", link: "#", note: "Chapter 1"}], videos: [], labs: [], assignments: [{title: "Math Sheet #1", question: "Limit calculation?", solutionText: "Answer is 2."}] }, { name: "English I", code: "ENG101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Arabic I", code: "ARB101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Physics", code: "PHY101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Religious Culture", code: "REL101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Fundamentals", code: "CS102", lectures: [], videos: [], labs: [], assignments: [] }] },
-  { id: 2, title: "Semester 02", year: "Freshman", subjects: [{ name: "Arabic II", code: "ARB102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "English II", code: "ENG102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Religious Culture II", code: "REL102", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Calculus I", code: "MATH101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Methods I", code: "CS103", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Sudanese Studies", code: "SUD101", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Discrete Math", code: "MATH102", lectures: [], videos: [], labs: [], assignments: [] }] },
-  { id: 3, title: "Semester 03", year: "Sophomore", subjects: [
-      { name: "Calculus II", code: "MATH201", lectures: [{ title: "Full Course Notes", type: "pdf", link: "https://drive.google.com/file/d/10F5uzxD7uIjC57I_lN9-zR6f5AwjVKGX/view?usp=drivesdk", note: "مقرر الحسبان (نوتة شاملة)" }], videos: [], labs: [], assignments: [] },
-      { name: "Statistics", code: "STAT201", lectures: [
-          { title: "Lec 1: Intro to Statistics", type: "pdf", link: "https://drive.google.com/file/d/1WhpvG29H6ErnIga1yz0B_UQyj_3nFZ79/view?usp=drivesdk", note: "مفاهيم أساسية" },
-          { title: "Lec 2: Branches", type: "pdf", link: "https://drive.google.com/file/d/1uCO22nmKzUsIsX-k471E9DW_0OeZuO6C/view?usp=drivesdk", note: "فروع الإحصاء" },
-          { title: "Lec 3: Data Presentation", type: "pdf", link: "https://drive.google.com/file/d/1EoNSP3Ohng-hS7m5NokdQCJNjduP7Lm0/view?usp=drivesdk", note: "عرض وتبويب البيانات" },
-          { title: "Lec 4: Descriptive Measures", type: "pdf", link: "https://drive.google.com/file/d/1rANMgZebtl43zBKmHyTJxSPFkfcJY1u0/view?usp=drivesdk", note: "مقاييس الوصف" },
-          { title: "Lec 5: Grouped Data", type: "pdf", link: "https://drive.google.com/file/d/11PCpIX-b3nqm2JljLoIRtd1ajUAFnVOD/view?usp=drivesdk", note: "البيانات المبوبة" },
-          { title: "Lec 6: Probability", type: "pdf", link: "https://drive.google.com/file/d/1DvYejbepMiiJizQAaXLM9Idsg6Qgp-8X/view?usp=drivesdk", note: "الاحتمالات والتوزيعات" },
-          { title: "Lec 7: Conditional Prob", type: "pdf", link: "https://drive.google.com/file/d/1Ohmz_jdYL1ClMZvHr0_59JeC_svF_6g2/view?usp=drivesdk", note: "الاحتمال الشرطي" },
-          { title: "Lec 8: Bayes Theorem", type: "pdf", link: "https://drive.google.com/file/d/10oXTZcyTE7bCAtaJIa-0DCozyPHADY_D/view?usp=drivesdk", note: "نظرية بايز" },
-          { title: "Lec 9: Random Variables", type: "pdf", link: "https://drive.google.com/file/d/1jVH8jYnFAZANJe-I2jkjgwwSfuUPr0bl/view?usp=drivesdk", note: "المتغيرات العشوائية" },
-          { title: "Lec 10: Probability Func", type: "pdf", link: "https://drive.google.com/file/d/1Sd2RzMDNjJOy-IuqSo7fdbLZIYBpZ_L0/view?usp=drivesdk", note: "دوال الاحتمال" },
-          { title: "Lec 11: Continuous Dist", type: "pdf", link: "https://drive.google.com/file/d/1Rew15AnXoG5SWk14JP4TyRaojNOm9A8i/view?usp=drivesdk", note: "التوزيعات المتصلة" },
-          { title: "Lec 12: Standard Normal", type: "pdf", link: "https://drive.google.com/file/d/17oz39JNyvbbD3WasnQDrOBMLEM_jEpAT/view?usp=drivesdk", note: "التوزيع الطبيعي" }
-      ], videos: [], labs: [], assignments: [] },
-      { name: "Linear Algebra", code: "MATH202", lectures: [{ title: "Full Course", type: "pdf", link: "https://drive.google.com/file/d/1N50ZtpnDzMFjRrU6mxXWHEP5JuPtaI1v/view?usp=drivesdk", note: "مقرر الجبر الخطي شامل" }], videos: [], labs: [], assignments: [] },
-      { name: "Prog. Methods II", code: "CS201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Sys Analysis I", code: "IS201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Comm. Skills", code: "GEN201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Digital Design", code: "CS202", lectures: [
-          { title: "Lec 1: Data Rep.", type: "pdf", link: "https://drive.google.com/file/d/1myETzAxTFMlp-FXh3kWNJlLiUNpOWgwW/view?usp=drivesdk", note: "تمثيل البيانات" },
-          { title: "Lec 2: Real Numbers", type: "pdf", link: "https://drive.google.com/file/d/1nvQjAypYquNqTBDtUGtgcfYMgki68dMd/view?usp=drivesdk", note: "الأعداد الحقيقية" },
-          { title: "Lec 3: Logic Ops", type: "pdf", link: "https://drive.google.com/file/d/1k3xbWG4ifZdSuhPoVhII99ld3cFPvRAB/view?usp=drivesdk", note: "العمليات المنطقية" },
-          { title: "Lec 4: NAND Gate", type: "pdf", link: "https://drive.google.com/file/d/1jJEzn2whnDn9zBrOhA-scDBopsE7ZaBO/view?usp=drivesdk", note: "بوابة NAND" },
-          { title: "Lec 5: Boolean Vars", type: "pdf", link: "https://drive.google.com/file/d/1k0qZUwdkPUTiW8hfaX9l_OO9u1GCBTIr/view?usp=drivesdk", note: "المتغيرات المنطقية" },
-          { title: "Lec 6: Advanced Logic", type: "pdf", link: "https://drive.google.com/file/d/1_mzdGZQx0660uzqd2EQZGTjO_dAmvcxZ/view?usp=drivesdk", note: "تابع المنطق" },
-          { title: "Lec 7: Simplification 1", type: "pdf", link: "https://drive.google.com/file/d/1YWGb1HZ5glXQUvPPOsRtOH6NFL1Cm3vi/view?usp=drivesdk", note: "التبسيط 1" },
-          { title: "Lec 8: K-Map", type: "pdf", link: "https://drive.google.com/file/d/1YwJzCbvvPUykWXucKV-FSVZz-nDM63Ee/view?usp=drivesdk", note: "مخططات كارنو" },
-          { title: "Lec 9: 5-Var K-Map", type: "pdf", link: "https://drive.google.com/file/d/1-rtb38fSmXNlsU0X2eUB9U2usKvOnV_N/view?usp=drivesdk", note: "كارنو 5 متغيرات" }
-      ], videos: [], labs: [], assignments: [] }
-  ]},
-  { id: 4, title: "Semester 04", year: "Sophomore", subjects: [{ name: "Object Oriented Prog.", code: "CS203", lectures: [{ title: "Lec 1: Concepts", type: "pdf", link: "#", note: "Intro" }], videos: [{ title: "OOP Intro", duration: "45:00", link: "#" }], labs: [], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Database I", code: "IS204", lectures: [], videos: [], labs: [], assignments: [] }] },
-  { id: 5, title: "Semester 05", year: "Junior", subjects: [{ name: "Internet Tech I", code: "IT301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Computer Networks", code: "CN301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Database II", code: "IS301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Algorithms", code: "CS301", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Visual Prog.", code: "CS302", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Microprocessors", code: "CS303", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Software Eng I", code: "SE301", lectures: [], videos: [], labs: [], assignments: [] }] },
-  { id: 6, title: "Semester 06", year: "Junior", subjects: [{ name: "Internet Tech II", code: "IT302", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Computer Arch.", code: "CS304", lectures
+const LoginScreen = ({ onLogin }) => {
+  const [data, setData] = useState({ name: '', email: '', secret: '' });
+  const [error, setError] = useState('');
+  return (
+    <div style={{ ...styles.contentWrapper, justifyContent: 'center' }}>
+      <div style={styles.loginCard}>
+        <div style={{ marginBottom: '24px' }}>
+          <Shield size={40} color="#FFD54F" style={{ margin: '0 auto 10px' }} />
+          <h1 style={{ color: '#fff', margin: 0 }}>CS PROMAX</h1>
+          <p style={{ color: '#FFD54F', fontSize: '12px', letterSpacing: '2px' }}>SECURE LOGIN</p>
+        </div>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          if (data.secret !== 'NRU@Cs@21') return setError('الكود السري غير صحيح');
+          onLogin(data);
+        }} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <input required placeholder="الاسم الثلاثي" style={styles.input} onChange={e => setData({...data, name: e.target.value})} />
+          <input required type="email" placeholder="البريد الإلكتروني" style={styles.input} onChange={e => setData({...data, email: e.target.value})} />
+          <input required type="password" placeholder="الكود السري" style={{...styles.input, letterSpacing: '4px'}} onChange={e => setData({...data, secret: e.target.value})} />
+          {error && <div style={{ color: 'red', fontSize: '12px' }}>{error}</div>}
+          <button style={{...styles.btn, width: '100%'}}>تسجيل الدخول</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
+/* =================================================================================
+   4. MAIN APP
+   ================================================================================= */
+export default function CsProMaxV26() {
+  const [user, setUser] = useState(null);
+  const [view, setView] = useState('home');
+  const [activeSem, setActiveSem] = useState(null);
+  const [activeSub, setActiveSub] = useState(null);
+  const [search, setSearch] = useState('');
 
+  useEffect(() => { const u = localStorage.getItem('cs_promax_v26'); if(u) setUser(JSON.parse(u)); }, []);
+  const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v26', JSON.stringify(u)); };
+  const logout = () => { localStorage.removeItem('cs_promax_v26'); setUser(null); setView('home'); };
+
+  const filtered = initialData.map(s => ({
+    ...s, subjects: s.subjects.filter(sub => sub.name.toLowerCase().includes(search.toLowerCase()) || sub.code.toLowerCase().includes(search.toLowerCase()))
+  })).filter(s => s.subjects.length > 0);
+
+  if (!user) return <div style={styles.appContainer}><InteractiveMatrix /><LoginScreen onLogin={login} /></div>;
+
+  return (
+    <div style={styles.appContainer}>
+      <InteractiveMatrix />
+      <div style={styles.contentWrapper}>
+        <nav style={styles.navbar}>
+          <div style={styles.navContainer}>
+            <div style={styles.logoArea} onClick={() => setView('home')}>
+              <div style={styles.logoIcon}><Terminal size={20} color="#FFD54F"/></div>
+              <div>
+                <h1 style={{ color: '#fff', fontSize: '1.2rem', margin: 0, fontWeight: 'bold' }}>CS PROMAX</h1>
+                <span style={{ color: '#888', fontSize: '0.7rem' }}>BATCH 21 & 22</span>
+              </div>
+            </div>
+            <div style={styles.searchArea}>
+              <input placeholder="بحث عن مادة..." style={styles.input} onChange={e => { setSearch(e.target.value); if(e.target.value) setView('home'); }} />
+              <Search size={16} color="#666" style={{ position: 'absolute', right: '12px', top: '12px' }} />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ textAlign: 'right', display: window.innerWidth < 600 ? 'none' : 'block' }}>
+                <div style={{ color: '#FFD54F', fontSize: '0.9rem', fontWeight: 'bold' }}>{user.name}</div>
+                <div style={{ color: '#888', fontSize: '0.7rem' }}>{user.email}</div>
+              </div>
+              <button onClick={logout} style={{ background: 'none', border: '1px solid #555', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: '#ff4444' }}><LogOut size={16}/></button>
+            </div>
+          </div>
+        </nav>
+
+        <main style={styles.main}>
+          {view !== 'home' && (
+            <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888' }}>
+              <span onClick={() => setView('home')} style={{ cursor: 'pointer', color: '#FFD54F' }}>الرئيسية</span> <ChevronRight size={14}/>
+              {activeSem && <span onClick={() => setView('subjects')} style={{ cursor: 'pointer', color: view === 'subjects' ? '#FFD54F' : 'inherit' }}>{activeSem.title}</span>}
+              {activeSub && view === 'content' && <><ChevronRight size={14}/><span style={{ color: '#FFD54F' }}>{activeSub.code}</span></>}
+            </div>
+          )}
+
+          {view === 'home' && (
+            <div style={styles.grid}>
+              {filtered.map(sem => (
+                <div key={sem.id} style={styles.card} onClick={() => { setActiveSem(sem); setView('subjects'); }}>
+                  <div>
+                    <span style={{ fontSize: '12px', color: '#FFD54F', border: '1px solid #FFD54F', padding: '2px 6px', borderRadius: '4px' }}>{sem.year}</span>
+                    <h2 style={{ color: '#fff', marginTop: '10px', fontSize: '1.5rem' }}>{sem.title}</h2>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: '#888', marginTop: '20px' }}>
+                    <Layers size={14} /> {sem.subjects.length} مواد
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {view === 'subjects' && activeSem && (
+            <>
+              <h2 style={{ color: '#fff', marginBottom: '20px', borderRight: '4px solid #FFD54F', paddingRight: '12px' }}>{activeSem.title}</h2>
+              <div style={styles.grid}>
+                {activeSem.subjects.map((sub, i) => (
+                  <div key={i} style={styles.card} onClick={() => { setActiveSub(sub); setView('content'); }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <Code size={24} color="#666" />
+                      <span style={{ fontSize: '12px', color: '#888' }}>{sub.code}</span>
+                    </div>
+                    <h3 style={{ color: '#fff', marginTop: '12px' }}>{sub.name}</h3>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {view === 'content' && activeSub && (
+            <>
+              <div style={styles.headerPanel}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <span style={{ color: '#FFD54F', fontSize: '14px', fontWeight: 'bold' }}>{activeSub.code}</span>
+                    <h1 style={{ color: '#fff', margin: '4px 0' }}>{activeSub.name}</h1>
+                  </div>
+                  <Cpu size={40} color="#3E2723" />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                <section>
+                  <div style={styles.sectionTitle}><FileText size={20} color="#FFD54F"/> المحاضرات</div>
+                  {activeSub.lectures.length > 0 ? activeSub.lectures.map((item, i) => (
+                    <div key={i} style={styles.itemRow}>
+                      <div>
+                        <strong style={{ color: '#fff', display: 'block' }}>{item.title}</strong>
+                        <small style={{ color: '#888' }}>{item.note}</small>
+                      </div>
+                      <a href={item.link} target="_blank" rel="noreferrer" style={styles.btn}>تحميل PDF</a>
+                    </div>
+                  )) : <div style={{ textAlign: 'center', color: '#666', padding: '20px', border: '1px dashed #333', borderRadius: '8px' }}>لا توجد محاضرات</div>}
+                </section>
+
+                <section>
+                  <div style={styles.sectionTitle}><Video size={20} color="#ff4444"/> الفيديوهات</div>
+                  {activeSub.videos.length > 0 ? activeSub.videos.map((item, i) => (
+                    <div key={i} style={{ ...styles.itemRow, borderLeft: '4px solid #ff4444' }}>
+                      <div>
+                        <strong style={{ color: '#fff', display: 'block' }}>{item.title}</strong>
+                        <small style={{ color: '#888' }}>{item.duration}</small>
+                      </div>
+                      <a href={item.link} target="_blank" rel="noreferrer" style={{ ...styles.btn, backgroundColor: '#ff4444', color: '#fff' }}>مشاهدة</a>
+                    </div>
+                  )) : <div style={{ textAlign: 'center', color: '#666', padding: '20px', border: '1px dashed #333', borderRadius: '8px' }}>لا توجد فيديوهات</div>}
+                </section>
+
+                <section>
+                  <div style={styles.sectionTitle}><Save size={20} color="#4CAF50"/> التكاليف</div>
+                  {activeSub.assignments.length > 0 ? activeSub.assignments.map((item, i) => (
+                    <div key={i} style={{ ...styles.itemRow, borderLeft: '4px solid #4CAF50' }}>
+                      <strong style={{ color: '#fff' }}>{item.title}</strong>
+                      <p style={{ color: '#ccc', fontSize: '14px', background: '#000', padding: '10px', borderRadius: '4px' }}>{item.question}</p>
+                      {item.solutionCode && <pre style={{ direction: 'ltr', background: '#111', color: '#aaffaa', padding: '10px', overflowX: 'auto', borderRadius: '4px', fontSize: '12px' }}>{item.solutionCode}</pre>}
+                      {item.solutionText && <p style={{ color: '#aaffaa', fontSize: '14px' }}>الإجابة: {item.solutionText}</p>}
+                    </div>
+                  )) : <div style={{ textAlign: 'center', color: '#666', padding: '20px', border: '1px dashed #333', borderRadius: '8px' }}>لا توجد تكاليف</div>}
+                </section>
+              </div>
+            </>
+          )}
+        </main>
+
+        <footer style={{ marginTop: 'auto', padding: '20px', borderTop: '1px solid #333', textAlign: 'center' }}>
+          <p style={{ color: '#FFD54F', fontWeight: 'bold', margin: 0 }}>CS PROMAX</p>
+          <p style={{ color: '#666', fontSize: '12px', margin: 0 }}>SECURE SYSTEM V26</p>
+        </footer>
+      </div>
+    </div>
+  );
+}
