@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X } from 'lucide-react';
+import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X, Map, Globe, Brain, Smartphone } from 'lucide-react';
 
 /* =================================================================================
    1. CSS STYLES (PIXEL PERFECT LAYOUT)
@@ -426,6 +426,39 @@ int main() {
   { id: 8, title: "Semester 08", year: "Senior", subjects: [{ name: "Ethical Issues", code: "GEN401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Networks Security", code: "CN401", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Wireless Comp.", code: "CN402", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Prog. Concepts II", code: "CS404", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Project II", code: "PROJ2", lectures: [], videos: [], labs: [], assignments: [] }] }
 ];
 
+/* --- ROADMAPS DATA --- */
+const roadmapsData = [
+  {
+    id: 1,
+    title: "Web Development",
+    icon: <Globe size={40} className="text-gold" />,
+    desc: "مسار تطوير المواقع الكامل (Full Stack)",
+    steps: ["HTML, CSS, JavaScript", "React.js (Frontend)", "Node.js / Python (Backend)", "Databases (SQL/NoSQL)", "Git & GitHub"]
+  },
+  {
+    id: 2,
+    title: "AI & Data Science",
+    icon: <Brain size={40} className="text-gold" />,
+    desc: "ذكاء اصطناعي وعلم بيانات",
+    steps: ["Python Programming", "Mathematics & Statistics", "Data Analysis (Pandas)", "Machine Learning (Scikit)", "Deep Learning (PyTorch)"]
+  },
+  {
+    id: 3,
+    title: "Mobile App Dev",
+    icon: <Smartphone size={40} className="text-gold" />,
+    desc: "تطوير تطبيقات الهواتف",
+    steps: ["Dart Language", "Flutter Framework", "State Management", "API Integration", "Publishing to Stores"]
+  },
+  {
+    id: 4,
+    title: "Cyber Security",
+    icon: <Shield size={40} className="text-gold" />,
+    desc: "الأمن السيبراني والهاكر الأخلاقي",
+    steps: ["Networks & Linux Basics", "Python/Bash Scripting", "Penetration Testing", "Cryptography", "Security Tools (Kali)"]
+  }
+];
+
+
 /* =================================================================================
    4. COMPONENTS
    ================================================================================= */
@@ -513,6 +546,12 @@ export default function CsProMaxV28() {
               </div>
               <div className="flex items-center gap-3">
                  <button onClick={() => setShowSearch(!showSearch)} className="md-hidden text-gray-500"><Search size={20}/></button>
+{/* زر الخرائط الجديد */}
+<button onClick={() => setView('roadmaps')} className="flex items-center gap-2 p-2 rounded-lg hover:bg-[#333] transition group">
+   <Map size={20} className="text-[#FFD54F] group-hover:scale-110 transition-transform"/>
+   <span className="text-xs font-bold text-white hidden md:block">المسارات</span>
+</button>
+
                  <div style={{ textAlign: 'right', display: window.innerWidth < 600 ? 'none' : 'block' }}><div className="text-gold font-cairo" style={{ fontSize: '0.8rem' }}>{user.name}</div></div>
                  <button onClick={logout} style={{ background: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)', padding: '8px', borderRadius: '50%', color: '#ff4444', cursor: 'pointer' }}><LogOut size={18}/></button>
               </div>
@@ -558,6 +597,49 @@ export default function CsProMaxV28() {
                 ))}
               </div>
             )}
+            {/* ROADMAPS VIEW */}
+            {view === 'roadmaps' && (
+              <div className="animate-entry">
+                <div className="mb-8 flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-right">
+                  <div className="p-3 bg-black border border-[#FFD54F] rounded-full text-[#FFD54F] shadow-[0_0_15px_#FFD54F]"><Map size={24}/></div>
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-black text-white">خارطة الطريق</h2>
+                    <p className="text-gray-500 text-xs md:text-sm font-code">CAREER_PATHS_GUIDE</p>
+                  </div>
+                </div>
+
+                <div className="grid-system">
+                  {roadmapsData.map((map) => (
+                    <div key={map.id} className="dark-panel p-6 relative overflow-hidden group">
+                      {/* Icon & Title */}
+                      <div className="flex justify-between items-start mb-4">
+                         <div className="p-3 rounded-lg bg-black border border-[#333] group-hover:border-[#FFD54F] transition">{map.icon}</div>
+                         <span className="font-code text-[10px] text-[#FFD54F] border border-[#FFD54F]/30 px-2 py-1 rounded">TRACK_0{map.id}</span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white font-cairo mb-2">{map.title}</h3>
+                      <p className="text-sm text-gray-500 mb-6 font-cairo">{map.desc}</p>
+                      
+                      {/* Steps List */}
+                      <div className="space-y-3">
+                        {map.steps.map((step, i) => (
+                          <div key={i} className="flex items-center gap-3">
+                             <div className="w-6 h-6 rounded-full bg-[#333] text-[#FFD54F] flex items-center justify-center text-[10px] font-bold border border-[#555]">{i+1}</div>
+                             <span className="text-sm text-gray-300 font-code">{step}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Decoration */}
+                      <div className="absolute -bottom-4 -left-4 opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                        {map.icon}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
 
             {view === 'content' && activeSub && (
               <div className="animate-entry">
@@ -624,7 +706,7 @@ export default function CsProMaxV28() {
           </main>
 
           <footer className="hacker-card" style={{ marginTop: 'auto', borderRadius: '0', borderLeft: '0', borderRight: '0', textAlign: 'center' }}>
-            <p className="text-gold font-bold">CS PROMAX</p>
+            <p className="text-gold font-bold">CS PROMAX 2026 </p>
             <p className="font-code text-gray-500 text-xs">SECURE_SYSTEM_V28.0</p>
           </footer>
         </>
