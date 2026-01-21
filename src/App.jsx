@@ -355,7 +355,9 @@ export default function CsProMaxV28() {
               </div>
             </div>
             {showSearch && (
-
+              <div className="app-container md-hidden animate-entry" style={{ marginTop: '0', paddingTop: '0' }}>
+                <input autoFocus type="text" placeholder="ابحث عن مادة..." className="hacker-input" onChange={(e) => { setSearchTerm(e.target.value); if(e.target.value) setView('home'); }} />
+              </div>
             )}
           </nav>
 
