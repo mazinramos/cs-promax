@@ -269,7 +269,9 @@ const initialData = [
   { title: "Lec 3.1 Video: دوال الهدم", duration: "شرح", link: "https://drive.google.com/file/d/1wOzWXscJojUONTUNDfP8utbuq-FEB4q4/view?usp=drivesdk" },
   { title: "Lec 4 Video: المؤشرات والمصفوفات", duration: "شرح", link: "https://drive.google.com/file/d/1_FJROjdlII4eO0sUnxNkA7BhYL6EUqa7/view?usp=drivesdk" }
 ],
- labs: [], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [], videos: [], labs: [
+ labs: [], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [
+  { title: "Full Course Notes", type: "pdf", link: "https://drive.google.com/file/d/1IzoPr5I7YRlMi2Ei8ghphgFjeeb819zn/view?usp=drivesdk", note: "مقرر هياكل البيانات" }
+], videos: [], labs: [
   {
     title: "Lab 1: Insertion Sort",
     description: "كود خوارزمية الترتيب بالإقحام (Insertion Sort) مع شرح الخطوات.",
