@@ -623,30 +623,27 @@ int main() {
   }
 ],
   assignments: [
-  {
-    title: "Assignment 1: Insertion Sort",
-    description: "كود خوارزمية الترتيب بالإقحام (Insertion Sort) مع شرح الخطوات.",
-    code: `#include <iostream>
+  { 
+    title: "Assignment 1: Insertion Sort", 
+    question: "اكتب برنامج لترتيب مصفوفة باستخدام خوارزمية الإقحام (Insertion Sort).", 
+    solutionCode: `#include <iostream>
 using namespace std;
 
-// Function to perform Insertion Sort
+// دالة الترتيب بالإقحام
 void insertionSort(int arr[], int n) {
     int key, j;
     for (int i = 1; i < n; i++) {
-        key = arr[i]; // The card in our hand
+        key = arr[i]; 
         j = i - 1;
 
-        // Move elements greater than key to the right
         while (j >= 0 && arr[j] > key) {
             arr[j + 1] = arr[j];
             j = j - 1;
         }
-        // Place key in correct position
         arr[j + 1] = key;
     }
 }
 
-// Function to print array
 void printArray(int arr[], int n) {
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
@@ -666,19 +663,18 @@ int main() {
     printArray(arr, n);
 
     return 0;
-}`
+}` 
   },
-  {
-    title: "Assignment 2: Circular Queue",
-    description: "تطبيق الصف الدائري (Circular Queue) باستخدام المصفوفات.",
-    code: `#include <iostream>
+  { 
+    title: "Assignment 2: Circular Queue", 
+    question: "اكتب برنامج لتطبيق الصف الدائري (Circular Queue) باستخدام المصفوفات.", 
+    solutionCode: `#include <iostream>
 using namespace std;
 #define SIZE 5
 
 int cQueue[SIZE];
 int front = -1, rear = -1;
 
-// Check if Queue is Full
 bool isFull() {
     if ((front == 0 && rear == SIZE - 1) || (front == rear + 1)) {
         return true;
@@ -686,7 +682,6 @@ bool isFull() {
     return false;
 }
 
-// Check if Queue is Empty
 bool isEmpty() {
     if (front == -1)
         return true;
@@ -694,42 +689,33 @@ bool isEmpty() {
         return false;
 }
 
-// Add Element (Enqueue)
 void enqueue(int element) {
     if (isFull()) {
         cout << "Queue is full \\n";
     } else {
-        if (front == -1) front = 0; // Set front if empty
-        
-        // Circular increment
+        if (front == -1) front = 0;
         rear = (rear + 1) % SIZE;
         cQueue[rear] = element;
         cout << "Inserted " << element << endl;
     }
 }
 
-// Remove Element (Dequeue)
 void dequeue() {
     int element;
     if (isEmpty()) {
         cout << "Queue is empty \\n";
     } else {
         element = cQueue[front];
-        
-        // If last element, reset pointers
         if (front == rear) {
             front = -1;
             rear = -1;
-        } 
-        // Circular decrement
-        else {
+        } else {
             front = (front + 1) % SIZE;
         }
         cout << "Deleted element -> " << element << endl;
     }
 }
 
-// Display Queue
 void display() {
     int i;
     if (isEmpty()) {
@@ -737,41 +723,30 @@ void display() {
     } else {
         cout << "Front -> " << front << endl;
         cout << "Items -> ";
-        
-        // Loop smartly for circular nature
         for (i = front; i != rear; i = (i + 1) % SIZE)
             cout << cQueue[i] << " ";
-        cout << cQueue[i]; // Print last element
+        cout << cQueue[i];
         cout << endl;
         cout << "Rear -> " << rear << endl;
     }
 }
 
 int main() {
-    // Testing Enqueue
     enqueue(1);
     enqueue(2);
     enqueue(3);
     enqueue(4);
     enqueue(5);
-
-    // Testing Full Condition
-    enqueue(6);
-
+    enqueue(6); // Full check
     display();
-
-    // Testing Dequeue (Circular Proof)
     dequeue();
-    
-    // Now we can insert again (Circular property)
-    enqueue(7); 
-
+    enqueue(7); // Circular check
     display();
-
     return 0;
-}`
+}` 
   }
-], }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
+],
+ }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
   { title: "Lec 1: Intro to OR", type: "pdf", link: "https://drive.google.com/file/d/1l0X6W9vEQXYAC7OOPFZS4Or-vUoSQtXc/view?usp=drivesdk", note: "بحوث العمليات واستخداماتها" },
   { title: "Lec 2: Decision Theory", type: "pdf", link: "https://drive.google.com/file/d/11GK2miG2z06Qj3suWEKO5IetBHZmqY-Y/view?usp=drivesdk", note: "نظرية اتخاذ القرار" },
   { title: "Lec 3: Certainty", type: "pdf", link: "https://drive.google.com/file/d/1oD53qJiGVwTwvo5rQIAQvrwG5aDMw4ZN/view?usp=drivesdk", note: "مفهوم التأكد" },
