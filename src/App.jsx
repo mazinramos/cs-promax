@@ -1,5 +1,5 @@
-import React,{ Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X, Map, Globe, Brain, Smartphone, Calculator, FileQuestion, Wrench } from 'lucide-react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X } from 'lucide-react';
 
 /* =================================================================================
    1. CSS STYLES (PIXEL PERFECT LAYOUT)
@@ -484,59 +484,6 @@ const LoginScreen = ({ onLogin }) => {
       </div>
     </div>
   );
-/* --- GPA COMPONENT --- */
-const GPACalculatorComponent = () => {
-  const [courses, setCourses] = useState([]);
-  const [hours, setHours] = useState('');
-  const [grade, setGrade] = useState('4.0');
-  
-  const addCourse = () => {
-    if(!hours) return;
-    setCourses([...courses, { h: parseFloat(hours), g: parseFloat(grade), id: Date.now() }]);
-    setHours('');
-  };
-
-  const calculate = () => {
-    const totalPoints = courses.reduce((acc, curr) => acc + (curr.h * curr.g), 0);
-    const totalHours = courses.reduce((acc, curr) => acc + curr.h, 0);
-    return totalHours ? (totalPoints / totalHours).toFixed(2) : '0.00';
-  };
-
-  return (
-    <div className="w-full">
-       <div className="flex gap-4 mb-4">
-          <input type="number" placeholder="الساعات" value={hours} onChange={e=>setHours(e.target.value)} className="hacker-input" />
-          <select value={grade} onChange={e=>setGrade(e.target.value)} className="hacker-input">
-             <option value="4.0">A (4.0)</option>
-             <option value="3.5">B+ (3.5)</option>
-             <option value="3.0">B (3.0)</option>
-             <option value="2.5">C+ (2.5)</option>
-             <option value="2.0">C (2.0)</option>
-             <option value="1.5">D (1.5)</option>
-             <option value="0.0">F (0.0)</option>
-          </select>
-          <button onClick={addCourse} className="btn-gold" style={{width:'100px'}}>إضافة</button>
-       </div>
-       
-       {courses.length > 0 && (
-         <div className="mb-6">
-           {courses.map(c => (
-             <div key={c.id} className="flex justify-between border-b border-[#333] py-2 text-sm text-gray-400 font-code">
-                <span>{c.h} hrs</span>
-                <span>{c.g} pts</span>
-             </div>
-           ))}
-         </div>
-       )}
-
-       <div className="text-center p-6 bg-black/50 rounded-xl border border-[#FFD54F]">
-          <span className="text-gray-500 font-cairo block mb-2">المعدل الفصلي</span>
-          <span className="text-5xl font-black text-[#FFD54F] font-code">{calculate()}</span>
-       </div>
-    </div>
-  );
-};
-
 };
 
 /* =================================================================================
@@ -623,161 +570,78 @@ export default function CsProMaxV28() {
               </div>
             )}
 
-                        {view === 'content' && activeSub && (
+            {view === 'content' && activeSub && (
               <div className="animate-entry">
-                {/* HEADER (اسم المادة والكود) - زي ما هو */}
-                <div className="dark-panel p-6 mb-8 flex justify-between items-start relative overflow-hidden">
-                  <div>
-                     <span className="font-code text-gold text-sm badge mb-2">{activeSub.code}</span>
-                     <h1 className="font-cairo text-white text-3xl font-black">{activeSub.name}</h1>
+                <div className="hacker-card" style={{ padding: '24px', marginBottom: '24px', minHeight: 'auto' }}>
+                  <div className="flex justify-between items-start">
+                    <div><span className="font-code text-gold" style={{ fontSize: '14px' }}>{activeSub.code}</span><h1 className="font-cairo text-white" style={{ fontSize: '24px', fontWeight: 'bold' }}>{activeSub.name}</h1></div>
+                    <Cpu size={40} style={{ opacity: 0.2, color: '#FFD54F' }} />
                   </div>
-                  <Cpu size={60} style={{ opacity: 0.1, color: '#FFD54F', position:'absolute', left:'20px', top:'50%', transform:'translateY(-50%)' }} />
                 </div>
 
-                <div className="flex flex-col gap-10">
-                  
-                  {/* ================= SECTON 1: LECTURES (كروت فردية) ================= */}
-                  <section>
-                    <h3 className="font-cairo text-white text-xl font-bold mb-4 flex items-center gap-2 px-2 border-r-4 border-[#FFD54F]"><FileText className="text-gold"/> المحاضرات</h3>
+                <div className="flex flex-col gap-4">
+                  {/* Lectures */}
+                  <div className="hacker-card" style={{ minHeight: 'auto' }}>
+                    <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><FileText className="text-gold"/> المحاضرات</h3>
                     {activeSub.lectures.length > 0 ? (
-                      <div className="grid-system">
+                      <div className="grid-layout">
                         {activeSub.lectures.map((lec, i) => (
-                          // هنا التغيير: الكارت بقا جوه اللوب
-                          <div key={i} className="dark-panel p-5 clickable pointer flex flex-col justify-between relative overflow-hidden group" style={{minHeight: '160px'}}>
-                            <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity"><FileText size={40} className="text-gold"/></div>
-                            <div className="mb-4 relative z-10">
-                               <strong className="text-white block font-cairo text-lg mb-1">{lec.title}</strong>
-                               <span className="font-code text-gray-500 text-xs">{lec.note}</span>
-                            </div>
-                            <a href={lec.link} target="_blank" rel="noopener noreferrer" className="btn-gold btn-outline relative z-10 hover:scale-105 transition-transform">
-                               {lec.type === 'pptx' ? 'تحميل عرض (PPTX)' : 'تحميل PDF'}
-                            </a>
+                          <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
+                            <div style={{ marginBottom: '10px' }}><strong className="text-white block">{lec.title}</strong><span style={{ fontSize: '12px', color: '#888' }}>{lec.note}</span></div>
+                            <a href={lec.link} target="_blank" className="btn-gold btn-outline">تحميل PDF</a>
                           </div>
                         ))}
                       </div>
-                    ) : <div className="dark-panel p-6 text-center opacity-50 font-code">NO_LECTURES_FOUND</div>}
-                  </section>
+                    ) : <p className="text-center text-gray-500 font-code">NO DATA</p>}
+                  </div>
 
-                  {/* ================= SECTON 2: VIDEOS (كروت حمراء مميزة) ================= */}
-                  <section>
-                     <h3 className="font-cairo text-white text-xl font-bold mb-4 flex items-center gap-2 px-2 border-r-4 border-[#ff4444]"><Video style={{color:'#ff4444'}}/> الفيديوهات</h3>
+                  {/* Videos */}
+                  <div className="hacker-card" style={{ minHeight: 'auto', borderLeft: '4px solid #ff4444' }}>
+                     <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><Video style={{color:'#ff4444'}}/> الفيديوهات</h3>
                      {activeSub.videos.length > 0 ? (
-                        <div className="grid-system">
+                        <div className="grid-layout">
                           {activeSub.videos.map((vid, i) => (
-                            // ستايل خاص جداً للفيديوهات باللون الأحمر
-                            <div key={i} className="p-5 rounded-xl clickable pointer flex flex-col justify-between relative overflow-hidden group" 
-                                 style={{ 
-                                     background: 'linear-gradient(145deg, rgba(40,0,0,0.9), rgba(20,0,0,0.95))', // خلفية حمراء داكنة
-                                     border: '1px solid #ff4444', // حدود حمراء
-                                     boxShadow: '0 4px 15px rgba(255, 0, 0, 0.15)', // ضل أحمر خفيف
-                                     minHeight: '160px'
-                                 }}>
-                              {/* أيقونة تشغيل خلفية */}
-                              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10 group-hover:opacity-20 transition-opacity scale-150">
-                                  <Play size={80} color="#ff4444" fill="#ff4444" />
-                              </div>
-                              
-                              <div className="mb-4 relative z-10">
-                                 <strong className="text-white block font-cairo text-lg mb-1">{vid.title}</strong>
-                                 <span className="font-code text-gray-400 text-xs flex items-center gap-1"><Play size={12}/> {vid.duration}</span>
-                              </div>
-                              {/* زر المشاهدة الأحمر الفاقع */}
-                              <a href={vid.link} target="_blank" rel="noopener noreferrer" className="block w-full text-center font-bold py-3 rounded-lg relative z-10 hover:scale-105 transition-transform"
-                                 style={{ background: '#ff4444', color: '#fff', boxShadow: '0 0 20px rgba(255,0,0,0.4)', fontFamily: 'Cairo' }}>
-                                 مشاهدة الفيديو الآن
-                              </a>
+                            <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
+                              <div style={{ marginBottom: '10px' }}><strong className="text-white block">{vid.title}</strong><span style={{ fontSize: '12px', color: '#888' }}>{vid.duration}</span></div>
+                              <a href={vid.link} target="_blank" className="btn-gold btn-red">مشاهدة</a>
                             </div>
                           ))}
                         </div>
-                     ) : <div className="dark-panel p-6 text-center opacity-50 font-code" style={{borderLeft:'4px solid #ff4444'}}>NO_VIDEOS_UPLOADED</div>}
-                  </section>
+                     ) : <p className="text-center text-gray-500 font-code">NO VIDEOS</p>}
+                  </div>
                   
-                  {/* ================= SECTON 3: LABS (كروت فردية) ================= */}
-                  <section>
-                     <h3 className="font-cairo text-white text-xl font-bold mb-4 flex items-center gap-2 px-2 border-r-4 border-[#448AFF]"><Terminal style={{color:'#448AFF'}}/> المعمل (Labs)</h3>
-                     {activeSub.labs.length > 0 ? (
-                        <div className="flex flex-col gap-4">
+                  {/* Labs & Assignments */}
+                  <div className="hacker-card" style={{ minHeight: 'auto', borderLeft: '4px solid #4CAF50' }}>
+                     <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><Save style={{color:'#4CAF50'}}/> التكاليف والمعمل</h3>
+                     {activeSub.assignments.length > 0 || activeSub.labs.length > 0 ? (
+                        <div>
                           {activeSub.labs.map((lab, i) => (
-                             <div key={i} className="dark-panel p-5" style={{ borderLeft: '4px solid #448AFF' }}>
-                                <h4 className="font-cairo text-white text-lg font-bold mb-3 flex items-center gap-2"><Code size={16} className="text-blue-400"/> {lab.title}</h4>
-                                {lab.type === 'file' ? (
-                                    <div className="bg-black/50 p-4 rounded-lg border border-blue-900/50 flex justify-between items-center">
-                                        <span className="text-gray-400 text-sm font-code">{lab.description}</span>
-                                        <a href={lab.link} target="_blank" rel="noopener noreferrer" className="badge hover:bg-[#448AFF] hover:text-white pointer" style={{ borderColor: '#448AFF', color: '#448AFF', padding: '8px 16px', textDecoration: 'none' }}>Download {lab.fileType}</a>
-                                    </div>
-                                ) : (
-                                    <CodeViewer code={lab.code} title="source_code.cpp" />
-                                )}
-                             </div>
+                             <div key={i} className="mb-8"><h4 className="font-cairo text-white mb-2">{lab.title}</h4><CodeViewer code={lab.code} title="source.cpp" /></div>
                           ))}
-                        </div>
-                     ) : <div className="dark-panel p-6 text-center opacity-50 font-code" style={{borderLeft:'4px solid #448AFF'}}>NO_LABS_DATA</div>}
-                  </section>
-
-                  {/* ================= SECTON 4: ASSIGNMENTS (كروت فردية) ================= */}
-                  <section>
-                     <h3 className="font-cairo text-white text-xl font-bold mb-4 flex items-center gap-2 px-2 border-r-4 border-[#4CAF50]"><Save style={{color:'#4CAF50'}}/> التكاليف (Assignments)</h3>
-                     {activeSub.assignments.length > 0 ? (
-                        <div className="flex flex-col gap-6">
                           {activeSub.assignments.map((assign, i) => (
-                             <div key={i} className="dark-panel p-6 relative overflow-hidden" style={{ borderLeft: '4px solid #4CAF50' }}>
-                                <div className="absolute top-0 right-0 p-4 opacity-5"><Check size={50} color="#4CAF50"/></div>
-                                
-                                <h4 className="font-cairo text-white text-xl font-bold mb-3">{assign.title}</h4>
-                                <div className="bg-black/80 p-4 rounded-lg border-r-2 border-[#4CAF50] mb-4">
-                                   <p className="font-cairo text-gray-300 leading-relaxed">{assign.question}</p>
-                                </div>
-                                
-                                {/* محتويات الحل المختلفة */}
-                                <div className="flex flex-col gap-4 relative z-10">
-                                    {assign.fileLink && <a href={assign.fileLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-outline" style={{ borderColor: '#4CAF50', color: '#4CAF50', width:'fit-content' }}>📎 تحميل الملف المرفق ({assign.fileType || 'File'})</a>}
-                                    {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution Code" />}
-                                    {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة النموذجية" />}
-                                    {assign.imageLink && <div className="rounded-lg overflow-hidden border border-[#333] mt-2"><img src={assign.imageLink} alt="Solution" className="w-full block" /></div>}
-                                </div>
+                             <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #333', paddingBottom: '20px' }}>
+                                <h4 className="font-cairo text-white mb-2">{assign.title}</h4>
+                                <p className="font-cairo text-[#ccc] bg-[#000] p-3 rounded mb-4">{assign.question}</p>
+                                {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution" />}
+                                {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة" />}
                              </div>
                           ))}
                         </div>
-                     ) : <div className="dark-panel p-6 text-center opacity-50 font-code" style={{borderLeft:'4px solid #4CAF50'}}>NO_ASSIGNMENTS_PENDING</div>}
-                  </section>
-                  {/* Past Exams Section */}
-                  <section>
-                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2" style={{color:'#9C27B0'}}>
-                        <FileQuestion size={20}/> امتحانات سابقة
-                     </h3>
-                     {/* هنا بنفترض إنك ضفت exams: [] في الداتا */}
-                     {activeSubject.exams && activeSubject.exams.length > 0 ? (
-                        <div className="grid-system">
-                          {activeSubject.exams.map((exam, i) => (
-                             <div key={i} className="dark-panel p-5 border-l-4" style={{borderLeftColor: '#9C27B0'}}>
-                                <h4 className="text-white font-bold mb-2 font-cairo">{exam.year}</h4>
-                                <span className="text-xs text-gray-500 font-code mb-3 block">{exam.type}</span>
-                                <a href={exam.link} target="_blank" className="btn-gold btn-outline" style={{color:'#9C27B0', borderColor:'#9C27B0'}}>تحميل الامتحان</a>
-                             </div>
-                          ))}
-                        </div>
-                     ) : <p className="text-center text-gray-600 font-code p-4 border border-[#333] rounded-lg">NO_PAST_EXAMS</p>}
-                  </section>
-
+                     ) : <p className="text-center text-gray-500 font-code">NO ASSIGNMENTS</p>}
+                  </div>
                 </div>
               </div>
             )}
-            {/* GPA CALCULATOR VIEW */}
-            {view === 'gpa' && (
-              <div className="animate-entry">
-                <div className="dark-panel p-6 mb-8 text-center">
-                   <h2 className="text-3xl font-cairo text-white font-bold mb-2">حاسبة المعدل الفصلي</h2>
-                   <p className="font-code text-gold">GPA_CALCULATOR_V1.0</p>
-                </div>
+          </main>
 
-                <div className="grid-system">
-                   {/* Calculator Logic UI */}
-                   <div className="dark-panel p-6" style={{gridColumn: '1 / -1'}}>
-                      <GPACalculatorComponent />
-                   </div>
-                </div>
-              </div>
-            )}
-
+          <footer className="hacker-card" style={{ marginTop: 'auto', borderRadius: '0', borderLeft: '0', borderRight: '0', textAlign: 'center' }}>
+            <p className="text-gold font-bold">CS PROMAX</p>
+            <p className="font-code text-gray-500 text-xs">SECURE_SYSTEM_V28.0</p>
+          </footer>
+        </>
+      )}
+    </div>
+  );
+}
 
 
