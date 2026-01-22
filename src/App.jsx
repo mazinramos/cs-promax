@@ -720,7 +720,7 @@ export default function CsProMaxV28() {
                         </div>
                      ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_ASSIGNMENTS</div>}
                   </section>
-
+))}
           </main>
 
           <footer className="hacker-card" style={{ marginTop: 'auto', borderRadius: '0', borderLeft: '0', borderRight: '0', textAlign: 'center' }}>
