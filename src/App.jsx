@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X } from 'lucide-react';
+import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X, Map, Globe, Brain, Smartphone, Calculator, FileQuestion, Wrench } from 'lucide-react';
+
 
 /* =================================================================================
    1. CSS STYLES (PIXEL PERFECT LAYOUT)
@@ -484,6 +484,59 @@ const LoginScreen = ({ onLogin }) => {
       </div>
     </div>
   );
+/* --- GPA COMPONENT --- */
+const GPACalculatorComponent = () => {
+  const [courses, setCourses] = useState([]);
+  const [hours, setHours] = useState('');
+  const [grade, setGrade] = useState('4.0');
+  
+  const addCourse = () => {
+    if(!hours) return;
+    setCourses([...courses, { h: parseFloat(hours), g: parseFloat(grade), id: Date.now() }]);
+    setHours('');
+  };
+
+  const calculate = () => {
+    const totalPoints = courses.reduce((acc, curr) => acc + (curr.h * curr.g), 0);
+    const totalHours = courses.reduce((acc, curr) => acc + curr.h, 0);
+    return totalHours ? (totalPoints / totalHours).toFixed(2) : '0.00';
+  };
+
+  return (
+    <div className="w-full">
+       <div className="flex gap-4 mb-4">
+          <input type="number" placeholder="الساعات" value={hours} onChange={e=>setHours(e.target.value)} className="hacker-input" />
+          <select value={grade} onChange={e=>setGrade(e.target.value)} className="hacker-input">
+             <option value="4.0">A (4.0)</option>
+             <option value="3.5">B+ (3.5)</option>
+             <option value="3.0">B (3.0)</option>
+             <option value="2.5">C+ (2.5)</option>
+             <option value="2.0">C (2.0)</option>
+             <option value="1.5">D (1.5)</option>
+             <option value="0.0">F (0.0)</option>
+          </select>
+          <button onClick={addCourse} className="btn-gold" style={{width:'100px'}}>إضافة</button>
+       </div>
+       
+       {courses.length > 0 && (
+         <div className="mb-6">
+           {courses.map(c => (
+             <div key={c.id} className="flex justify-between border-b border-[#333] py-2 text-sm text-gray-400 font-code">
+                <span>{c.h} hrs</span>
+                <span>{c.g} pts</span>
+             </div>
+           ))}
+         </div>
+       )}
+
+       <div className="text-center p-6 bg-black/50 rounded-xl border border-[#FFD54F]">
+          <span className="text-gray-500 font-cairo block mb-2">المعدل الفصلي</span>
+          <span className="text-5xl font-black text-[#FFD54F] font-code">{calculate()}</span>
+       </div>
+    </div>
+  );
+};
+
 };
 
 /* =================================================================================
@@ -687,8 +740,44 @@ export default function CsProMaxV28() {
                         </div>
                      ) : <div className="dark-panel p-6 text-center opacity-50 font-code" style={{borderLeft:'4px solid #4CAF50'}}>NO_ASSIGNMENTS_PENDING</div>}
                   </section>
+                  {/* Past Exams Section */}
+                  <section>
+                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2" style={{color:'#9C27B0'}}>
+                        <FileQuestion size={20}/> امتحانات سابقة
+                     </h3>
+                     {/* هنا بنفترض إنك ضفت exams: [] في الداتا */}
+                     {activeSubject.exams && activeSubject.exams.length > 0 ? (
+                        <div className="grid-system">
+                          {activeSubject.exams.map((exam, i) => (
+                             <div key={i} className="dark-panel p-5 border-l-4" style={{borderLeftColor: '#9C27B0'}}>
+                                <h4 className="text-white font-bold mb-2 font-cairo">{exam.year}</h4>
+                                <span className="text-xs text-gray-500 font-code mb-3 block">{exam.type}</span>
+                                <a href={exam.link} target="_blank" className="btn-gold btn-outline" style={{color:'#9C27B0', borderColor:'#9C27B0'}}>تحميل الامتحان</a>
+                             </div>
+                          ))}
+                        </div>
+                     ) : <p className="text-center text-gray-600 font-code p-4 border border-[#333] rounded-lg">NO_PAST_EXAMS</p>}
+                  </section>
+
                 </div>
               </div>
             )}
+            {/* GPA CALCULATOR VIEW */}
+            {view === 'gpa' && (
+              <div className="animate-entry">
+                <div className="dark-panel p-6 mb-8 text-center">
+                   <h2 className="text-3xl font-cairo text-white font-bold mb-2">حاسبة المعدل الفصلي</h2>
+                   <p className="font-code text-gold">GPA_CALCULATOR_V1.0</p>
+                </div>
+
+                <div className="grid-system">
+                   {/* Calculator Logic UI */}
+                   <div className="dark-panel p-6" style={{gridColumn: '1 / -1'}}>
+                      <GPACalculatorComponent />
+                   </div>
+                </div>
+              </div>
+            )}
+
 
 
