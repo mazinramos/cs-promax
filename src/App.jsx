@@ -269,11 +269,362 @@ const initialData = [
   { title: "Lec 3.1 Video: دوال الهدم", duration: "شرح", link: "https://drive.google.com/file/d/1wOzWXscJojUONTUNDfP8utbuq-FEB4q4/view?usp=drivesdk" },
   { title: "Lec 4 Video: المؤشرات والمصفوفات", duration: "شرح", link: "https://drive.google.com/file/d/1_FJROjdlII4eO0sUnxNkA7BhYL6EUqa7/view?usp=drivesdk" }
 ],
- labs: [], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [
+ labs: [
+  {
+    title: "Lab 1: Class & Object Basics",
+    description: "أساسيات إنشاء الكلاس وتعريف الدوال داخله وخارجه.",
+    code: `#include <iostream>
+using namespace std;
+
+class Rectangle {
+    float heigh, width; // متغيرات خاصة (Private)
+
+public:
+    // الإعلان عن الدوال (Prototypes)
+    void setside(float h, float w);
+    float area();
+};
+
+// تعريف دالة setside خارج الكلاس
+void Rectangle::setside(float h, float w) {
+    width = w;
+    heigh = h;
+}
+
+// تعريف دالة area خارج الكلاس
+float Rectangle::area() {
+    return width * heigh;
+}
+
+int main() {
+    Rectangle Myrect; // تعريف كائن
+    float Rectarea;
+
+    Myrect.setside(3.0, 4.0); // إعطاء قيم
+    Rectarea = Myrect.area(); // حساب المساحة
+
+    cout << "The area of rect = " << Rectarea << endl;
+    
+    return 0;
+}`
+  },
+  {
+    title: "Lab 2: Array of Objects",
+    description: "كيفية التعامل مع مصفوفة من الكائنات (Array of Objects).",
+    code: `#include <iostream>
+using namespace std;
+
+class Rectangle {
+    float width, heigh;
+public:
+    void setside(float w, float h) {
+        width = w;
+        heigh = h;
+    }
+    float area() {
+        return width * heigh;
+    }
+};
+
+int main() {
+    Rectangle rect[3]; // مصفوفة فيها 3 كائنات
+    int i;
+
+    // حلقة تكرار لإدخال البيانات وحساب المساحة
+    for(i = 0; i < 3; i++) {
+        // معادلة بسيطة لتغيير الأرقام في كل لفة
+        rect[i].setside(i + 2.5, i + 1.5);
+        
+        cout << "the area of rect = " << rect[i].area() << endl;
+    }
+
+    return 0;
+}`
+  },
+  {
+    title: "Lab 3: The 'this' Pointer",
+    description: "شرح استخدام المؤشر this للإشارة للكائن الحالي.",
+    code: `#include <iostream>
+using namespace std;
+
+class Test {
+    int x;
+public:
+    Test(int a);
+    void print();
+};
+
+Test::Test(int a) {
+    x = a;
+}
+
+void Test::print() {
+    // الثلاثة أسطر دي بتطبع نفس الحاجة
+    cout << "x = " << x << endl;            // مباشر
+    cout << "this->x = " << this->x << endl; // باستخدام السهم
+    cout << "(*this).x = " << (*this).x << endl; // بفك المؤشر
+}
+
+int main() {
+    Test t(12);
+    t.print();
+    return 0;
+}`
+  },
+  {
+    title: "Lab 4: Constructors",
+    description: "أنواع دوال البناء (الافتراضية والمعاملات).",
+    code: `#include <iostream>
+using namespace std;
+
+class rect {
+    float width, heigh;
+
+public:
+    // 1. دالة بناء افتراضية (بدون قيم)
+    rect() {
+        width = 0.0;
+        heigh = 0.0;
+    }
+
+    // 2. دالة بناء بمعاملات (بتاخد قيم)
+    rect(float w, float h) {
+        width = w;
+        heigh = h;
+    }
+
+    float area() {
+        return width * heigh;
+    }
+};
+
+int main() {
+    rect r1;             // حينادي الفاضية (أصفار)
+    rect r2(4.5, 5.5);   // حينادي التانية (بالأرقام)
+
+    cout << "the area of r1=" << r1.area() << endl;
+    cout << "the area of r2=" << r2.area() << endl;
+
+    return 0;
+}`
+  }
+], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [
   { title: "Full Course Notes", type: "pdf", link: "https://drive.google.com/file/d/1IzoPr5I7YRlMi2Ei8ghphgFjeeb819zn/view?usp=drivesdk", note: "مقرر هياكل البيانات" }
 ], videos: [], labs: [
   {
-    title: "Lab 1: Insertion Sort",
+    title: "Lab 1: Linear Search",
+    description: "كود البحث الخطي (Linear Search) للبحث عن عنصر في مصفوفة.",
+    code: `#include <iostream>
+using namespace std;
+
+// Function to search linearly
+int lin(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return i; // Found, return index
+        }
+    }
+    return -1; // Not Found
+}
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int n = 5;
+    
+    // Search for 30
+    int result = lin(arr, n, 30);
+    
+    if(result != -1) 
+        cout << "Found at index " << result;
+    else 
+        cout << "Not Found";
+        
+    return 0;
+}`
+  },
+  {
+    title: "Lab 2: Binary Search",
+    description: "كود البحث الثنائي (Binary Search) - يتطلب مصفوفة مرتبة.",
+    code: `#include <iostream>
+using namespace std;
+
+// Function for Binary Search
+int binarySearch(int arr[], int n, int num) {
+    int low = 0;
+    int high = n - 1;
+    
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        
+        if (arr[mid] == num)
+            return mid; // Found
+        else if (arr[mid] < num)
+            low = mid + 1; // Search Right
+        else
+            high = mid - 1; // Search Left
+    }
+    return -1; // Not Found
+}
+
+int main() {
+    int arr[] = {2, 3, 4, 10, 40}; // Must be sorted
+    int n = 5;
+    
+    cout << "Index: " << binarySearch(arr, n, 10);
+    return 0;
+}`
+  },
+  {
+    title: "Lab 3: Selection Sort",
+    description: "خوارزمية الترتيب بالاختيار (Selection Sort).",
+    code: `#include <iostream>
+#include <algorithm> // For swap
+using namespace std;
+
+void select(int arr[], int n) {
+    int min;
+    for (int i = 0; i < n - 1; i++) {
+        min = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min]) // Find smaller element
+                min = j;
+        }
+        swap(arr[min], arr[i]); // Swap found minimum with current
+    }
+}
+
+int main() {
+    int arr[] = {60, 40, 50, 30, 10};
+    int n = 5;
+    
+    select(arr, n);
+    
+    // Print Sorted Array
+    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    return 0;
+}`
+  },
+  {
+    title: "Lab 4: Bubble Sort",
+    description: "خوارزمية الترتيب الفقاعي (Bubble Sort).",
+    code: `#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void bubb(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) { // If current is greater than next
+                swap(arr[j], arr[j + 1]); // Swap them
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {60, 40, 50, 30, 10};
+    int n = 5;
+    
+    bubb(arr, n);
+    
+    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    return 0;
+}`
+  },
+  {
+    title: "Lab 5: Stack Implementation",
+    description: "تطبيق المكدس (Stack) باستخدام المصفوفات (LIFO).",
+    code: `#include <iostream>
+using namespace std;
+#define SIZE 5
+
+int stack[SIZE];
+int top = -1;
+
+void push(int value) {
+    if (top == SIZE - 1)
+        cout << "Stack Overflow\\n";
+    else {
+        top++;
+        stack[top] = value;
+    }
+}
+
+int pop() {
+    if (top == -1) {
+        cout << "Stack Underflow\\n";
+        return -1;
+    } else {
+        return stack[top--];
+    }
+}
+
+int peek() {
+    if (top == -1) return -1;
+    return stack[top];
+}
+
+int main() {
+    push(10);
+    push(20);
+    
+    cout << "Popped: " << pop() << endl; // Should print 20
+    return 0;
+}`
+  },
+  {
+    title: "Lab 6: Queue Implementation",
+    description: "تطبيق الطابور (Queue) باستخدام المصفوفات (FIFO).",
+    code: `#include <iostream>
+using namespace std;
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == SIZE - 1)
+        cout << "Queue is Full\\n";
+    else {
+        if (front == -1) front = 0; // Initialize front if empty
+        rear++;
+        queue[rear] = value;
+    }
+}
+
+void dequeue() {
+    if (front == -1 || front > rear)
+        cout << "Queue is Empty\\n";
+    else {
+        cout << "Deleted: " << queue[front] << endl;
+        front++;
+    }
+}
+
+void display() {
+    if (front == -1 || front > rear)
+        cout << "Empty";
+    else {
+        for (int i = front; i <= rear; i++)
+            cout << queue[i] << " ";
+        cout << endl;
+    }
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    
+    dequeue(); // Removes 10
+    display(); // Prints 20
+    
+    return 0;
+}`
+  }
+],
+  assignments: [
+  {
+    title: "Assignment 1: Insertion Sort",
     description: "كود خوارزمية الترتيب بالإقحام (Insertion Sort) مع شرح الخطوات.",
     code: `#include <iostream>
 using namespace std;
@@ -318,7 +669,7 @@ int main() {
 }`
   },
   {
-    title: "Lab 2: Circular Queue",
+    title: "Assignment 2: Circular Queue",
     description: "تطبيق الصف الدائري (Circular Queue) باستخدام المصفوفات.",
     code: `#include <iostream>
 using namespace std;
@@ -420,8 +771,7 @@ int main() {
     return 0;
 }`
   }
-],
-  assignments: [] }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
+], }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
   { title: "Lec 1: Intro to OR", type: "pdf", link: "https://drive.google.com/file/d/1l0X6W9vEQXYAC7OOPFZS4Or-vUoSQtXc/view?usp=drivesdk", note: "بحوث العمليات واستخداماتها" },
   { title: "Lec 2: Decision Theory", type: "pdf", link: "https://drive.google.com/file/d/11GK2miG2z06Qj3suWEKO5IetBHZmqY-Y/view?usp=drivesdk", note: "نظرية اتخاذ القرار" },
   { title: "Lec 3: Certainty", type: "pdf", link: "https://drive.google.com/file/d/1oD53qJiGVwTwvo5rQIAQvrwG5aDMw4ZN/view?usp=drivesdk", note: "مفهوم التأكد" },
