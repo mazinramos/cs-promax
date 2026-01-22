@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X } from 'lucide-react';
+import { Layers, Book, Lock, User, Mail, Code, Terminal, Search, LogOut, Play, ChevronRight, Save, Cpu, Wifi, Shield, Database, Video, FileText, PenTool, Check, Menu, X, Map, Globe, Brain, Smartphone, Calculator, FileQuestion, Languages, Bot, Send } from 'lucide-react';
+
 
 /* =================================================================================
    1. CSS STYLES (PIXEL PERFECT LAYOUT)
@@ -823,6 +823,127 @@ const SolutionViewer = ({ text, title }) => (
   </div>
 );
 
+/* =================================================================================
+   AI ASSISTANT COMPONENT (TRANSLATOR & HELPER)
+   ================================================================================= */
+const AIAssistant = ({ data }) => {
+  const [messages, setMessages] = useState([
+    { id: 1, sender: 'bot', text: 'أهلاً يا هندسة! 👋\nأنا مساعد CS PROMAX الذكي.\n\nبقدر أعمل ليك:\n1. ترجمة أي نص (اكتب طوالي).\n2. ترجمة المحاضرات (اكتب "ترجم لي محاضرة كذا").' }
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
+
+  // Auto-scroll to bottom
+  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+
+    const userMsg = { id: Date.now(), sender: 'user', text: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setLoading(true);
+
+    // 1. CHECK IF USER WANTS TO TRANSLATE A FILE (SMART SEARCH)
+    const searchFile = input.toLowerCase();
+    let foundFile = null;
+
+    if (searchFile.includes("شيت") || searchFile.includes("محاضرة") || searchFile.includes("ملف") || searchFile.includes("lec")) {
+       // Search in all semesters and subjects
+       data.forEach(sem => {
+         sem.subjects.forEach(sub => {
+           sub.lectures.forEach(lec => {
+             if (searchFile.includes(lec.title.toLowerCase()) || searchFile.includes(sub.code.toLowerCase())) {
+               foundFile = lec;
+             }
+           });
+         });
+       });
+    }
+
+    if (foundFile) {
+       // Generate Google Translate Link for the PDF
+       const translateUrl = `https://translate.google.com/translate?sl=auto&tl=ar&u=${encodeURIComponent(foundFile.link)}`;
+       
+       setTimeout(() => {
+         setMessages(prev => [...prev, { 
+           id: Date.now()+1, 
+           sender: 'bot', 
+           text: `لقيت ليك المحاضرة: "${foundFile.title}" 📄\n\nاضغط الرابط ده عشان تترجمها للعربي طوالي:`,
+           link: translateUrl 
+         }]);
+         setLoading(false);
+       }, 1000);
+       return;
+    }
+
+    // 2. TEXT TRANSLATION (FREE API)
+    try {
+      // Detect language roughly (if arabic chars > english) -> Translate to English, else to Arabic
+      const isArabic = /[\u0600-\u06FF]/.test(userMsg.text);
+      const targetLang = isArabic ? 'en' : 'ar';
+      const sourceLang = isArabic ? 'ar' : 'en';
+
+      const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(userMsg.text)}&langpair=${sourceLang}|${targetLang}`);
+      const result = await response.json();
+      
+      const translatedText = result.responseData.translatedText;
+
+      setMessages(prev => [...prev, { id: Date.now()+1, sender: 'bot', text: translatedText }]);
+    } catch (error) {
+      setMessages(prev => [...prev, { id: Date.now()+1, sender: 'bot', text: 'معليش، حصل خطأ في الاتصال بالسيرفر. حاول تاني.' }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full h-[600px] flex flex-col dark-panel overflow-hidden border-2 border-gold">
+       {/* Header */}
+       <div className="p-4 bg-black/50 border-b border-[#333] flex items-center gap-3">
+         <div className="p-2 rounded-full bg-[#FFD54F]/20 border border-[#FFD54F]"><Bot size={24} className="text-gold"/></div>
+         <div><h3 className="font-cairo text-white font-bold">المساعد الذكي</h3><span className="text-green-500 text-xs font-code">● ONLINE</span></div>
+       </div>
+
+       {/* Chat Area */}
+       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/20">
+         {messages.map((msg) => (
+           <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-start' : 'justify-end'}`}>
+             <div className={`max-w-[80%] p-3 rounded-xl font-cairo text-sm whitespace-pre-wrap ${
+               msg.sender === 'user' 
+                 ? 'bg-[#333] text-white rounded-br-none' 
+                 : 'bg-[#FFD54F] text-black rounded-bl-none font-bold'
+             }`}>
+               {msg.text}
+               {msg.link && (
+                 <a href={msg.link} target="_blank" rel="noreferrer" className="block mt-2 px-3 py-1 bg-black text-white rounded text-xs text-center no-underline hover:bg-gray-800">
+                   فتح الترجمة 🔗
+                 </a>
+               )}
+             </div>
+           </div>
+         ))}
+         {loading && <div className="text-gray-500 text-xs text-center font-code animate-pulse">TRANSLATING...</div>}
+         <div ref={chatEndRef} />
+       </div>
+
+       {/* Input Area */}
+       <div className="p-4 bg-black/50 border-t border-[#333] flex gap-2">
+         <input 
+           value={input}
+           onChange={(e) => setInput(e.target.value)}
+           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+           placeholder="اكتب نص للترجمة أو اسم محاضرة..." 
+           className="hacker-input"
+           style={{borderRadius:'50px', padding:'10px 20px'}}
+         />
+         <button onClick={handleSend} className="p-3 bg-[#FFD54F] rounded-full hover:scale-110 transition"><Send size={20} color="black"/></button>
+       </div>
+    </div>
+  );
+};
+
 const LoginScreen = ({ onLogin }) => {
   const [formData, setFormData] = useState({ name: '', email: '', secret: '' });
   const [error, setError] = useState('');
@@ -894,6 +1015,10 @@ export default function CsProMaxV28() {
               <div className="app-container md-hidden animate-entry" style={{ marginTop: '0', paddingTop: '0' }}>
                 <input autoFocus type="text" placeholder="ابحث عن مادة..." className="hacker-input" onChange={(e) => { setSearchTerm(e.target.value); if(e.target.value) setView('home'); }} />
               </div>
+<button onClick={() => setView('ai')} className="btn-gold btn-outline" style={{width:'auto', padding:'6px 12px', fontSize:'12px', display:'flex', gap:'5px'}}>
+   <Bot size={14}/> المترجم
+</button>
+
             )}
           </nav>
 
@@ -920,6 +1045,18 @@ export default function CsProMaxV28() {
                 ))}
               </div>
             )}
+            {/* AI BOT VIEW */}
+            {view === 'ai' && (
+               <div className="animate-entry">
+                  <div className="mb-6 text-center">
+                    <h2 className="text-2xl font-black text-white font-cairo">المترجم الذكي</h2>
+                    <p className="text-[#FFD54F] font-code text-xs">AI_TRANSLATION_MODULE</p>
+                  </div>
+                  {/* بنمرر الداتا للبوت عشان يقدر يفتش فيها */}
+                  <AIAssistant data={initialData} />
+               </div>
+            )}
+
 
             {view === 'subjects' && activeSem && (
               <div className="grid-layout animate-entry">
