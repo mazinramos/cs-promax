@@ -580,58 +580,147 @@ export default function CsProMaxV28() {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  {/* Lectures */}
-                  <div className="hacker-card" style={{ minHeight: 'auto' }}>
-                    <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><FileText className="text-gold"/> المحاضرات</h3>
-                    {activeSub.lectures.length > 0 ? (
-                      <div className="grid-layout">
-                        {activeSub.lectures.map((lec, i) => (
-                          <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
-                            <div style={{ marginBottom: '10px' }}><strong className="text-white block">{lec.title}</strong><span style={{ fontSize: '12px', color: '#888' }}>{lec.note}</span></div>
-                            <a href={lec.link} target="_blank" className="btn-gold btn-outline">تحميل PDF</a>
-                          </div>
-                        ))}
-                      </div>
-                    ) : <p className="text-center text-gray-500 font-code">NO DATA</p>}
-                  </div>
-
-                  {/* Videos */}
-                  <div className="hacker-card" style={{ minHeight: 'auto', borderLeft: '4px solid #ff4444' }}>
-                     <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><Video style={{color:'#ff4444'}}/> الفيديوهات</h3>
-                     {activeSub.videos.length > 0 ? (
-                        <div className="grid-layout">
-                          {activeSub.videos.map((vid, i) => (
-                            <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
-                              <div style={{ marginBottom: '10px' }}><strong className="text-white block">{vid.title}</strong><span style={{ fontSize: '12px', color: '#888' }}>{vid.duration}</span></div>
-                              <a href={vid.link} target="_blank" className="btn-gold btn-red">مشاهدة</a>
-                            </div>
-                          ))}
+                                    {/* LECTURES SECTION */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#FFD54F]">
+                       <FileText className="text-gold"/> المحاضرات
+                     </h3>
+                     {activeSub.lectures.length > 0 ? (
+                        <div className="grid-system">
+                           {activeSub.lectures.map((lec, i) => (
+                             <div key={i} className="dark-panel p-5 relative overflow-hidden group" style={{ minHeight: '180px' }}>
+                                {/* Background Icon Decoration */}
+                                <div className="absolute top-[-10px] right-[-10px] opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                                   <FileText size={100} className="text-gold"/>
+                                </div>
+                                
+                                <div className="relative z-10 flex flex-col h-full justify-between">
+                                   <div>
+                                     <div className="flex justify-between items-start mb-2">
+                                        <span className="badge border-gold text-gold bg-gold/10">LEC {i+1}</span>
+                                     </div>
+                                     <h4 className="text-white font-cairo font-bold text-lg leading-tight mb-2">{lec.title}</h4>
+                                     <p className="text-gray-500 font-code text-xs mb-4">// {lec.note}</p>
+                                   </div>
+                                   
+                                   <a href={lec.link} target="_blank" rel="noopener noreferrer" className="btn-gold btn-outline w-full flex items-center justify-center gap-2 hover:bg-gold hover:text-black transition-all">
+                                      <ChevronRight size={16}/> {lec.type === 'pptx' ? 'تحميل عرض (PPTX)' : 'تحميل PDF'}
+                                   </a>
+                                </div>
+                             </div>
+                           ))}
                         </div>
-                     ) : <p className="text-center text-gray-500 font-code">NO VIDEOS</p>}
-                  </div>
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">DIRECTORY_EMPTY</div>}
+                  </section>
+
+                                    {/* VIDEOS SECTION */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#ff4444]">
+                       <Video style={{color:'#ff4444'}}/> الفيديوهات
+                     </h3>
+                     {activeSub.videos.length > 0 ? (
+                        <div className="grid-system">
+                           {activeSub.videos.map((vid, i) => (
+                             <div key={i} className="dark-panel p-5 relative overflow-hidden group border-l-4" style={{ borderLeftColor: '#ff4444', minHeight: '180px' }}>
+                                {/* Background Icon */}
+                                <div className="absolute top-[-10px] right-[-10px] opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                                   <Play size={100} color="#ff4444"/>
+                                </div>
+
+                                <div className="relative z-10 flex flex-col h-full justify-between">
+                                   <div>
+                                      <div className="flex justify-between items-start mb-2">
+                                         <span className="badge" style={{borderColor:'#ff4444', color:'#ff4444', background:'rgba(255,68,68,0.1)'}}>VIDEO</span>
+                                         <span className="text-gray-500 text-xs font-code">{vid.duration}</span>
+                                      </div>
+                                      <h4 className="text-white font-cairo font-bold text-lg mb-2">{vid.title}</h4>
+                                   </div>
+                                   
+                                   <a href={vid.link} target="_blank" rel="noopener noreferrer" className="btn-gold w-full flex items-center justify-center gap-2 transition-all" 
+                                      style={{ background: 'rgba(255,68,68,0.1)', color: '#ff4444', borderColor: '#ff4444', border:'1px solid' }}
+                                      onMouseOver={(e) => {e.currentTarget.style.background = '#ff4444'; e.currentTarget.style.color = '#fff'}}
+                                      onMouseOut={(e) => {e.currentTarget.style.background = 'rgba(255,68,68,0.1)'; e.currentTarget.style.color = '#ff4444'}}>
+                                      <Play size={16} fill="currentColor"/> مشاهدة الشرح
+                                   </a>
+                                </div>
+                             </div>
+                           ))}
+                        </div>
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_VIDEOS_FOUND</div>}
+                  </section>
+
                   
-                  {/* Labs & Assignments */}
-                  <div className="hacker-card" style={{ minHeight: 'auto', borderLeft: '4px solid #4CAF50' }}>
-                     <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><Save style={{color:'#4CAF50'}}/> التكاليف والمعمل</h3>
-                     {activeSub.assignments.length > 0 || activeSub.labs.length > 0 ? (
-                        <div>
+                  
+                              {/* LABS SECTION */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#448AFF]">
+                       <Terminal style={{color:'#448AFF'}}/> المعمل (Labs)
+                     </h3>
+                     {activeSub.labs.length > 0 ? (
+                        <div className="flex flex-col gap-6">
                           {activeSub.labs.map((lab, i) => (
-                             <div key={i} className="mb-8"><h4 className="font-cairo text-white mb-2">{lab.title}</h4><CodeViewer code={lab.code} title="source.cpp" /></div>
-                          ))}
-                          {activeSub.assignments.map((assign, i) => (
-                             <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #333', paddingBottom: '20px' }}>
-                                <h4 className="font-cairo text-white mb-2">{assign.title}</h4>
-                                <p className="font-cairo text-[#ccc] bg-[#000] p-3 rounded mb-4">{assign.question}</p>
-                                {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution" />}
-                                {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة" />}
+                             <div key={i} className="dark-panel p-6 relative overflow-hidden" style={{ borderLeft: '4px solid #448AFF' }}>
+                                <div className="flex justify-between items-center mb-4">
+                                   <h4 className="font-cairo text-white text-lg font-bold flex items-center gap-2">
+                                     <Code size={20} className="text-blue-400"/> {lab.title}
+                                   </h4>
+                                   {lab.type === 'file' && <span className="badge" style={{borderColor:'#448AFF', color:'#448AFF', background:'rgba(68,138,255,0.1)'}}>FILE</span>}
+                                </div>
+                                
+                                {lab.type === 'file' ? (
+                                    <div className="flex justify-between items-center bg-black/50 p-4 rounded-lg border border-blue-900/30">
+                                        <p className="text-gray-400 text-sm font-code flex-1">{lab.description}</p>
+                                        <a href={lab.link} target="_blank" rel="noopener noreferrer" className="btn-gold" 
+                                           style={{ width:'auto', background:'#448AFF', color:'#fff', border:'none', padding:'8px 20px' }}>
+                                           Download
+                                        </a>
+                                    </div>
+                                ) : (
+                                    <CodeViewer code={lab.code} title="Source Code" />
+                                )}
                              </div>
                           ))}
                         </div>
-                     ) : <p className="text-center text-gray-500 font-code">NO ASSIGNMENTS</p>}
-                  </div>
-                </div>
-              </div>
-            )}
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_LABS_DATA</div>}
+                  </section>
+
+                  {/* ASSIGNMENTS SECTION */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#4CAF50]">
+                       <Save style={{color:'#4CAF50'}}/> التكاليف (Assignments)
+                     </h3>
+                     {activeSub.assignments.length > 0 ? (
+                        <div className="grid-system">
+                          {activeSub.assignments.map((assign, i) => (
+                             <div key={i} className="dark-panel p-5 relative overflow-hidden group" style={{ minHeight: 'auto', borderTop: '4px solid #4CAF50' }}>
+                                <div className="absolute top-[-10px] right-[-10px] opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                                   <Check size={100} color="#4CAF50"/>
+                                </div>
+                                
+                                <div className="relative z-10">
+                                   <h4 className="font-cairo text-white text-lg font-bold mb-3">{assign.title}</h4>
+                                   <div className="bg-black/60 p-3 rounded border-r-2 border-[#4CAF50] mb-4">
+                                      <p className="font-cairo text-gray-300 text-sm">{assign.question}</p>
+                                   </div>
+                                   
+                                   {/* Dynamic Content */}
+                                   <div className="flex flex-col gap-3">
+                                      {assign.fileLink && (
+                                        <a href={assign.fileLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-outline w-full" style={{borderColor:'#4CAF50', color:'#4CAF50'}}>
+                                           <ChevronRight size={14} className="inline"/> تحميل الملف المرفق
+                                        </a>
+                                      )}
+                                      {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution" />}
+                                      {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة النموذجية" />}
+                                      {assign.imageLink && <div className="rounded border border-[#333] overflow-hidden mt-2"><img src={assign.imageLink} className="w-full block" alt="Solution"/></div>}
+                                   </div>
+                                </div>
+                             </div>
+                          ))}
+                        </div>
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_ASSIGNMENTS</div>}
+                  </section>
+
           </main>
 
           <footer className="hacker-card" style={{ marginTop: 'auto', borderRadius: '0', borderLeft: '0', borderRight: '0', textAlign: 'center' }}>
