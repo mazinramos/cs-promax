@@ -972,27 +972,104 @@ export default function CsProMaxV28() {
                      ) : <p className="text-center text-gray-500 font-code">NO VIDEOS</p>}
                   </div>
                   
-                  {/* Labs & Assignments */}
-                  <div className="hacker-card" style={{ minHeight: 'auto', borderLeft: '4px solid #4CAF50' }}>
-                     <h3 className="font-cairo text-white flex items-center gap-2" style={{ marginBottom: '16px', fontWeight: 'bold' }}><Save style={{color:'#4CAF50'}}/> التكاليف والمعمل</h3>
-                     {activeSub.assignments.length > 0 || activeSub.labs.length > 0 ? (
-                        <div>
+                                    {/* LABS SECTION - FIXED */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#448AFF]">
+                       <Terminal style={{color:'#448AFF'}}/> المعمل (Labs)
+                     </h3>
+                     {activeSub.labs.length > 0 ? (
+                        <div className="grid-system">
                           {activeSub.labs.map((lab, i) => (
-                             <div key={i} className="mb-8"><h4 className="font-cairo text-white mb-2">{lab.title}</h4><CodeViewer code={lab.code} title="source.cpp" /></div>
-                          ))}
-                          {activeSub.assignments.map((assign, i) => (
-                             <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #333', paddingBottom: '20px' }}>
-                                <h4 className="font-cairo text-white mb-2">{assign.title}</h4>
-                                <p className="font-cairo text-[#ccc] bg-[#000] p-3 rounded mb-4">{assign.question}</p>
-                                {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution" />}
-                                {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة" />}
+                             <div key={i} className="dark-panel p-5 relative overflow-hidden group" style={{ minHeight: 'auto', borderTop: '4px solid #448AFF' }}>
+                                {/* Decoration Icon */}
+                                <div className="absolute top-[-10px] right-[-10px] opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                                   <Code size={100} color="#448AFF"/>
+                                </div>
+                                
+                                <div className="relative z-10">
+                                   <h4 className="font-cairo text-white text-lg font-bold mb-3">{lab.title}</h4>
+                                   
+                                   {/* وصف اللاب إن وجد */}
+                                   {lab.description && (
+                                     <div className="bg-black/60 p-3 rounded border-r-2 border-[#448AFF] mb-4">
+                                        <p className="font-cairo text-gray-300 text-sm">{lab.description}</p>
+                                     </div>
+                                   )}
+                                   
+                                   {/* === منطقة عرض المحتوى === */}
+                                   <div className="flex flex-col gap-3">
+                                      
+                                      {/* 1. زر تحميل ملف اللاب (لو كان PDF أو CPP) */}
+                                      {(lab.fileLink || lab.link) && (
+                                        <a href={lab.fileLink || lab.link} target="_blank" rel="noopener noreferrer" 
+                                           className="btn-gold btn-outline w-full flex items-center justify-center gap-2 hover:bg-[#448AFF] hover:text-black hover:border-[#448AFF] transition-all" 
+                                           style={{borderColor:'#448AFF', color:'#448AFF'}}>
+                                           <ChevronRight size={14}/> تحميل ملف اللاب ({lab.fileType || 'File'})
+                                        </a>
+                                      )}
+
+                                      {/* 2. عرض الكود البرمجي (لو موجود نصاً) */}
+                                      {lab.code && <CodeViewer code={lab.code} title="Source Code" />}
+                                      
+                                   </div>
+                                </div>
                              </div>
                           ))}
                         </div>
-                     ) : <p className="text-center text-gray-500 font-code">NO ASSIGNMENTS</p>}
-                  </div>
-                </div>
-              </div>
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_LABS_DATA</div>}
+                  </section>
+                  {/* ASSIGNMENTS SECTION - FIXED */}
+                  <section>
+                     <h3 className="font-cairo text-white text-xl font-bold mb-6 flex items-center gap-2 px-2 border-r-4 border-[#4CAF50]">
+                       <Save style={{color:'#4CAF50'}}/> التكاليف (Assignments)
+                     </h3>
+                     {activeSub.assignments.length > 0 ? (
+                        <div className="grid-system">
+                          {activeSub.assignments.map((assign, i) => (
+                             <div key={i} className="dark-panel p-5 relative overflow-hidden group" style={{ minHeight: 'auto', borderTop: '4px solid #4CAF50' }}>
+                                {/* Decoration Icon */}
+                                <div className="absolute top-[-10px] right-[-10px] opacity-5 group-hover:opacity-10 transition-opacity transform rotate-12">
+                                   <Check size={100} color="#4CAF50"/>
+                                </div>
+                                
+                                <div className="relative z-10">
+                                   <h4 className="font-cairo text-white text-lg font-bold mb-3">{assign.title}</h4>
+                                   <div className="bg-black/60 p-3 rounded border-r-2 border-[#4CAF50] mb-4">
+                                      <p className="font-cairo text-gray-300 text-sm">{assign.question}</p>
+                                   </div>
+                                   
+                                   {/* === منطقة عرض المحتوى (الزر، الكود، الصورة) === */}
+                                   <div className="flex flex-col gap-3">
+                                      
+                                      {/* 1. زر تحميل الملف (PDF/Word) - ده الكان ناقص */}
+                                      {assign.fileLink && (
+                                        <a href={assign.fileLink} target="_blank" rel="noopener noreferrer" 
+                                           className="btn-gold btn-outline w-full flex items-center justify-center gap-2 hover:bg-[#4CAF50] hover:text-black hover:border-[#4CAF50] transition-all" 
+                                           style={{borderColor:'#4CAF50', color:'#4CAF50'}}>
+                                           <ChevronRight size={14}/> تحميل ملف الاسايمنت ({assign.fileType || 'PDF'})
+                                        </a>
+                                      )}
+
+                                      {/* 2. عرض الكود البرمجي */}
+                                      {assign.solutionCode && <CodeViewer code={assign.solutionCode} title="Solution Code" />}
+                                      
+                                      {/* 3. عرض الحل النصي */}
+                                      {assign.solutionText && <SolutionViewer text={assign.solutionText} title="الإجابة النموذجية" />}
+                                      
+                                      {/* 4. عرض الصورة */}
+                                      {assign.imageLink && (
+                                        <div className="rounded border border-[#333] overflow-hidden mt-2">
+                                           <img src={assign.imageLink} className="w-full block" alt="Solution Preview"/>
+                                        </div>
+                                      )}
+                                   </div>
+                                </div>
+                             </div>
+                          ))}
+                        </div>
+                     ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_ASSIGNMENTS</div>}
+                  </section>
+
             )}
           </main>
 
