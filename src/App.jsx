@@ -1069,6 +1069,7 @@ export default function CsProMaxV28() {
                         </div>
                      ) : <div className="dark-panel p-8 text-center opacity-60 font-code text-gray-500">NO_ASSIGNMENTS</div>}
                   </section>
+                         </div>
 
             )}
           </main>
