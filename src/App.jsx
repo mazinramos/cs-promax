@@ -238,11 +238,29 @@ const initialData = [
   { title: "Lec 11: Continuous Distributions", type: "pdf", link: "https://drive.google.com/file/d/1Rew15AnXoG5SWk14JP4TyRaojNOm9A8i/view?usp=drivesdk", note: "التوزيعات الإحتمالية المتصلة" },
   { title: "Lec 12: Standard Normal Dist.", type: "pdf", link: "https://drive.google.com/file/d/17oz39JNyvbbD3WasnQDrOBMLEM_jEpAT/view?usp=drivesdk", note: "التوزيع الطبيعي المعياري" }
 ],
- videos: [], labs: [], assignments: [] },
+ videos: [], labs: [], assignments: [
+  { 
+    title: "Assignment 1: Statistics Problems", 
+    question: "تمارين وتطبيقات في الإحصاء (حمل الملف للحل)", 
+    fileLink: "https://drive.google.com/file/d/1gApJmLfM0IuijaWxMFGOofz61FwopiMj/view?usp=drivesdk", 
+    fileType: "PDF" 
+  }
+],
+ },
       { name: "Linear Algebra", code: "MATH202", lectures: [{ title: "Full Course", type: "pdf", link: "https://drive.google.com/file/d/1N50ZtpnDzMFjRrU6mxXWHEP5JuPtaI1v/view?usp=drivesdk", note: "مقرر الجبر الخطي شامل" }], videos: [], labs: [], assignments: [] },
       { name: "Prog. Methods II", code: "CS201", lectures: [], videos: [], labs: [], assignments: [] },
       { name: "Sys Analysis I", code: "IS201", lectures: [], videos: [], labs: [], assignments: [] },
-      { name: "Comm. Skills", code: "GEN201", lectures: [], videos: [], labs: [], assignments: [] },
+      { name: "Comm. Skills", code: "GEN201", lectures: [
+  { title: "Lec 1-3: Concepts & Models", type: "pdf", link: "https://drive.google.com/file/d/1GYxwX659C_BqcWFVKJK7Acp0gqmueGip/view?usp=drivesdk", note: "المفهوم، العناصر، ونماذج الاتصال" },
+  { title: "Lec 4: Reading Skills", type: "pdf", link: "https://drive.google.com/file/d/1L1UUVvrzrO3TOmtO7UsVK438q-u5JooX/view?usp=drivesdk", note: "مهارات القراءة" },
+  { title: "Lec 5: Message Acceptance", type: "pdf", link: "https://drive.google.com/file/d/1_lHUfB2ME23skG9hkMWglSL3aPOHKNCw/view?usp=drivesdk", note: "كيفية التأثير على قبول الرسالة" },
+  { title: "Lec 6: Comprehension Barriers", type: "pdf", link: "https://drive.google.com/file/d/1MlhwlKQeL65qI3Cu0lp3j1yYRrfR8dNF/view?usp=drivesdk", note: "حواجز الاستيعاب والفهم الدقيق" },
+  { title: "Lec 7: Effective Writing", type: "pdf", link: "https://drive.google.com/file/d/1GuiVbRa24U8vTiIW9ltB0M5NP_5FYJ3w/view?usp=drivesdk", note: "الكتابة الفعّالة" },
+  { title: "Lec 8: Speaking Confidence", type: "pdf", link: "https://drive.google.com/file/d/19uCvA6AoVqruB65ApjhLYVN3kXf4QE9w/view?usp=drivesdk", note: "التحدث بثقة" },
+  { title: "Lec 9: Speaking Skills", type: "pdf", link: "https://drive.google.com/file/d/1sx5X4X3TUY3d02AGCmyweO7vCCWvfK95/view?usp=drivesdk", note: "مهارات التحدّث بثقة" },
+  { title: "Lec 10: Master Speaker", type: "pdf", link: "https://drive.google.com/file/d/1qT78YPiyBMyCszzMMVIDiceoFWSGVmg2/view?usp=drivesdk", note: "كيف تصبح متحدثاً بارعاً" }
+],
+  videos: [], labs: [], assignments: [] },
       { name: "Digital Design", code: "CS202", lectures: [
   { title: "Lec 1: Data Representation", type: "pdf", link: "https://drive.google.com/file/d/1myETzAxTFMlp-FXh3kWNJlLiUNpOWgwW/view?usp=drivesdk", note: "تمثيل البيانات في الأنظمة الرقمية" },
   { title: "Lec 2: Real Numbers", type: "pdf", link: "https://drive.google.com/file/d/1nvQjAypYquNqTBDtUGtgcfYMgki68dMd/view?usp=drivesdk", note: "الأعداد الحقيقية" },
@@ -254,7 +272,15 @@ const initialData = [
   { title: "Lec 8: Karnaugh Maps (K-Map)", type: "pdf", link: "https://drive.google.com/file/d/1YwJzCbvvPUykWXucKV-FSVZz-nDM63Ee/view?usp=drivesdk", note: "التبسيط باستخدام مخططات كارنو" },
   { title: "Lec 9: 5-Variable K-Map", type: "pdf", link: "https://drive.google.com/file/d/1-rtb38fSmXNlsU0X2eUB9U2usKvOnV_N/view?usp=drivesdk", note: "مخططات كارنو لخمسة متغيرات" }
 ],
- videos: [], labs: [], assignments: [] }
+ videos: [], labs: [], assignments: [
+  { 
+    title: "Assignment 1: Theoretical Task", 
+    question: "اسايمنت نظري (حمل الملف المرفق للإجابة)", 
+    fileLink: "https://drive.google.com/file/d/1z7qfi5n11qQYiD-SD9VT-dbd7pdVkJCk/view?usp=drivesdk", 
+    fileType: "PDF" 
+  }
+],
+ }
   ]},
   { id: 4, title: "Semester 04", year: "Sophomore", subjects: [{ name: "Object Oriented Prog.", code: "CS203", lectures: [
   { title: "Lec 1: Structures", type: "pdf", link: "https://drive.google.com/file/d/1OEC1Pik8xrw7RXt-RPm5TMK93BiuYaxC/view?usp=drivesdk", note: "الهياكل (Structs)" },
@@ -408,7 +434,18 @@ int main() {
     return 0;
 }`
   }
-], assignments: [{ title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` }] }, { name: "Data Structures", code: "CS204", lectures: [
+], assignments: [
+  
+  { title: "OOP Task 1", question: "Create Student class", solutionCode: `class Student { int id; }` },
+
+  { 
+    title: "Assignment 1: OOP Theory & Practice", 
+    question: "تمرين شامل في مفاهيم الـ OOP (حمل الملف)", 
+    fileLink: "https://drive.google.com/file/d/1IamaKK-w3i89sPUREt71j9i4btLUGSfj/view?usp=drivesdk", 
+    fileType: "PDF" 
+  }
+],
+ }, { name: "Data Structures", code: "CS204", lectures: [
   { title: "Full Course Notes", type: "pdf", link: "https://drive.google.com/file/d/1IzoPr5I7YRlMi2Ei8ghphgFjeeb819zn/view?usp=drivesdk", note: "مقرر هياكل البيانات" }
 ], videos: [], labs: [
   {
