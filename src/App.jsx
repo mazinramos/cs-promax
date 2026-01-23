@@ -806,7 +806,14 @@ int main() {
 }` 
   }
 ],
- }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
+ }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [
+    { 
+      title: "1- مقدمة إلى إدارة الملفات", 
+      type: "pdf", 
+      link: "https://drive.google.com/file/d/16nIGOEmgzYTmAbxsExa2-l09wE5Ufo5Z/view?usp=drivesdk",
+      note: "مقدمة شاملة عن أنظمة الملفات"
+    }
+  ], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
   { title: "Lec 1: Intro to OR", type: "pdf", link: "https://drive.google.com/file/d/1l0X6W9vEQXYAC7OOPFZS4Or-vUoSQtXc/view?usp=drivesdk", note: "بحوث العمليات واستخداماتها" },
   { title: "Lec 2: Decision Theory", type: "pdf", link: "https://drive.google.com/file/d/11GK2miG2z06Qj3suWEKO5IetBHZmqY-Y/view?usp=drivesdk", note: "نظرية اتخاذ القرار" },
   { title: "Lec 3: Certainty", type: "pdf", link: "https://drive.google.com/file/d/1oD53qJiGVwTwvo5rQIAQvrwG5aDMw4ZN/view?usp=drivesdk", note: "مفهوم التأكد" },
