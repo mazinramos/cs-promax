@@ -253,16 +253,16 @@ const initialData = [
   { title: "2-3- المصفوفات", type: "pdf", link: "https://drive.google.com/file/d/1AENnoii3-GsEFi08bg_LIFezUOMcJ8VA/view?usp=drivesdk" },
   { title: "4- النداء الذاتي (Recursion)", type: "pdf", link: "https://drive.google.com/file/d/14GJPqemdrjCzRCjQZsMaIBUtolJApbq8/view?usp=drivesdk" },
   { title: "5- المؤشرات (Pointers)", type: "pdf", link: "https://drive.google.com/file/d/1OMloemA8Z_6ha5k8CuVjcNhkkXtiKyoG/view?usp=drivesdk" },
-  { title: "6- السجلات (Records)", type: "pdf", link: "https://drive.google.com/file/d/1F3Ds-waG7NG-BCPdGsooUzU6Pwj3fmSD/view?usp=drivesdk" }
-]  videos: [
+  { title: "6- السجلات (Records)", type: "pdf", link: "https://drive.google.com/file/d/1F3Ds-waG7NG-BCPdGsooUzU6Pwj3fmSD/view?usp=drivesdk" },
+],  videos: [
   { title: "1- فيديو: المقدمة + الدوال", duration: "شرح", link: "https://drive.google.com/file/d/17GUIBUZD0K2DheecHO82TwiEoGVy6KMs/view?usp=drivesdk" },
   { title: "2- فيديو: مقدمة المصفوفات", duration: "شرح", link: "https://drive.google.com/file/d/10cfjiXV0mqFEC4F-o-OvIf4iLfpkTO-C/view?usp=drivesdk" },
   { title: "3- فيديو: المصفوفات ذات البعد الواحد", duration: "شرح", link: "https://drive.google.com/file/d/1ymQ5cwZABbLMxtCrRSdaVtN3rKkYbffP/view?usp=drivesdk" },
   { title: "4- فيديو: المصفوفات ذات البعدين", duration: "شرح", link: "https://drive.google.com/file/d/1noUeazQKqFKdpc2m8TYI_aWWgXWsgA4A/view?usp=drivesdk" },
   { title: "5- فيديو: استخدام المصفوفات مع الدوال", duration: "شرح", link: "https://drive.google.com/file/d/1O99IW-Kh5mkXxSnZVk9ktSmAfCYyeHox/view?usp=drivesdk" },
   { title: "6- فيديو: النداء الذاتي (Recursion)", duration: "شرح", link: "https://drive.google.com/file/d/10O03q3VkOBSUoTVRxH1iksExEtvqpVFp/view?usp=drivesdk" },
-  { title: "7- فيديو: المؤشرات (Pointers)", duration: "شرح", link: "https://drive.google.com/file/d/1Delppp5itBvA2jxDWTRNmmMlBicrjjr9/view?usp=drivesdk" }
-]  labs: [], assignments: [] },
+  { title: "7- فيديو: المؤشرات (Pointers)", duration: "شرح", link: "https://drive.google.com/file/d/1Delppp5itBvA2jxDWTRNmmMlBicrjjr9/view?usp=drivesdk" },
+],  labs: [], assignments: [] },
       { name: "Sys Analysis I", code: "IS201", lectures: [
   { title: "1- مفاهيم النظم", type: "pdf", link: "https://drive.google.com/file/d/1zkhz3_EjLstYOWWm_s8yReai9jUWUmHU/view?usp=drivesdk" },
   { title: "2- دراسة الجدوى", type: "pdf", link: "https://drive.google.com/file/d/1YIJoAl26fR9i4ajTD4UyGdyfJBo-S6Nt/view?usp=drivesdk" },
@@ -271,8 +271,8 @@ const initialData = [
   { title: "5- نمذجة الإجراءات", type: "pdf", link: "https://drive.google.com/file/d/1EU2kpx3CBmWpeJEkTPsSnvgk4GfpGlYA/view?usp=drivesdk" },
   { title: "6- نمذجة المعطيات", type: "pdf", link: "https://drive.google.com/file/d/14DZIVFqFZdXJKCJp1vo3V9Tjtk0BJyB5/view?usp=drivesdk" },
   { title: "7- مرحلة التصميم", type: "pdf", link: "https://drive.google.com/file/d/1yygCegXe82lQC7egbr52dlvci6KNSY6U/view?usp=drivesdk" },
-  { title: "8- مرحلة التنفيذ", type: "pdf", link: "https://drive.google.com/file/d/1u_SpXnZI6od2hqmNKW-Lonsfp6YUAruS/view?usp=drivesdk" }
-]  videos: [], labs: [], assignments: [] },
+  { title: "8- مرحلة التنفيذ", type: "pdf", link: "https://drive.google.com/file/d/1u_SpXnZI6od2hqmNKW-Lonsfp6YUAruS/view?usp=drivesdk" },
+],  videos: [], labs: [], assignments: [] },
       { name: "Comm. Skills", code: "GEN201", lectures: [
   { title: "Lec 1-3: Concepts & Models", type: "pdf", link: "https://drive.google.com/file/d/1GYxwX659C_BqcWFVKJK7Acp0gqmueGip/view?usp=drivesdk", note: "المفهوم، العناصر، ونماذج الاتصال" },
   { title: "Lec 4: Reading Skills", type: "pdf", link: "https://drive.google.com/file/d/1L1UUVvrzrO3TOmtO7UsVK438q-u5JooX/view?usp=drivesdk", note: "مهارات القراءة" },
