@@ -905,22 +905,6 @@ export default function CsProMaxV28() {
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
 
-useEffect(() => {
-  const controlNavbar = () => {
-    if (window.scrollY > lastScrollY && window.scrollY > 100) { 
-      // إذا نزل المستخدم للأسفل، اخفِ النافبار
-      setIsNavbarVisible(false);
-    } else { 
-      // إذا صعد المستخدم للأعلى، أظهر النافبار
-      setIsNavbarVisible(true);
-    }
-    setLastScrollY(window.scrollY);
-  };
-
-  window.addEventListener('scroll', controlNavbar);
-  return () => window.removeEventListener('scroll', controlNavbar);
-}, },[lastScrollY]);
-
 useEffect(() => { const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 const [lastScrollY, setLastScrollY] = useState(0);
 
