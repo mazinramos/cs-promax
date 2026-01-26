@@ -969,10 +969,6 @@ export default function CsProMaxV28() {
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [view, activeSem]);
-
   useEffect(() => { const u = localStorage.getItem('cs_promax_v28'); if(u) setUser(JSON.parse(u)); }, []);
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
