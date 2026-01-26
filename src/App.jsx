@@ -207,9 +207,9 @@ const styles = `
     background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 213, 79, 0.1);
-    padding: 8px 0;
+    padding: 12px 0;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    height: 60px;
+    height: 75px;
     display: flex;
     align-items: center;
   }
