@@ -1023,7 +1023,9 @@ useEffect(() => {
             {view === 'subjects' && activeSem && (
               <div className="grid-layout animate-entry">
                 {activeSem.subjects.map((sub, i) => (
-                  <div key={i} onClick={() => { setActiveSub(sub); setView('content'); }} className="hacker-card pointer">
+                  <div key={i}
+
+ onClick={() => { setActiveSub(sub); setView('content'); }} className="hacker-card pointer">
                     <div className="flex justify-between" style={{ marginBottom: '10px' }}><Code size={20} color="#666"/> <span className="font-code text-gray-500" style={{ fontSize: '12px' }}>{sub.code}</span></div>
                     <h3 className="font-cairo text-white" style={{ fontSize: '18px', fontWeight: 'bold' }}>{sub.name}</h3>
                   </div>
