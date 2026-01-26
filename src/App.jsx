@@ -919,7 +919,7 @@ useEffect(() => {
 
   window.addEventListener('scroll', controlNavbar);
   return () => window.removeEventListener('scroll', controlNavbar);
-}, [lastScrollY]);
+}, },[lastScrollY]);
 
 useEffect(() => { const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 const [lastScrollY, setLastScrollY] = useState(0);
