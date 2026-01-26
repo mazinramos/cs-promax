@@ -893,6 +893,27 @@ export default function CsProMaxV28() {
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
 
+// أضف هذا الكود داخل useEffect الأول في الدالة الرئيسية App أو CsProMaxV29
+useEffect(() => {
+  // دالة التعامل مع ضغطة زر الرجوع في الهاتف
+  const handlePopState = (event) => {
+    if (view !== 'home') {
+      // إذا لم يكن المستخدم في الصفحة الرئيسية، يمنع الخروج ويرجعه خطوة للخلف في المنصة
+      event.preventDefault();
+      if (view === 'content') setView('subjects');
+      else if (view === 'subjects' || view === 'ai') setView('home');
+    }
+  };
+
+  // إضافة "حالة" وهمية في تاريخ المتصفح عند كل تغيير في الـ view
+  window.history.pushState({ view }, "");
+
+  // الاستماع لزر الرجوع
+  window.addEventListener('popstate', handlePopState);
+  
+  return () => window.removeEventListener('popstate', handlePopState);
+}, [view]); // السطر ده مهم جداً عشان يتحدث مع كل تغيير صفحة
+
   const filtered = initialData.map(s => ({
     ...s, subjects: s.subjects.filter(sub => sub.name.toLowerCase().includes(search.toLowerCase()) || sub.code.toLowerCase().includes(search.toLowerCase()))
   })).filter(s => s.subjects.length > 0);
