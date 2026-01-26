@@ -122,8 +122,8 @@ const styles = `
 
   /* Buttons */
   .btn-red {
-  display: inline-block;
-  padding: 8px 16px;
+  display: block;
+  padding: 10px;
   background-color: #ff4444; /* اللون الأحمر */
   color: white;
   border-radius: 6px;
