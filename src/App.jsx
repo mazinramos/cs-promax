@@ -1044,7 +1044,7 @@ useEffect(() => {
                 style={{ 
                     background: 'rgba(255,0,0,0.1)', 
                     border: '1px solid rgba(255,0,0,0.3)', 
-                    padding: '8px', 
+                    padding: 'auto', 
                     borderRadius: '12px', 
                     color: '#ff4444', 
                     cursor: 'pointer',
