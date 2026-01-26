@@ -230,7 +230,7 @@ const styles = `
 }
 
 main.app-container {
-  margin-top: calc(95px + env(safe-area-inset-top));
+  padding-top: calc(95px + env(safe-area-inset-top));
   padding-bottom: env(safe-area-inset-bottom);
 }
   /* Animations */
