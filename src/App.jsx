@@ -147,37 +147,51 @@ const styles = `
   .btn-outline:hover { background: rgba(255, 213, 79, 0.1); }
 
   /* Navbar */
-   /* ابحث عن .navbar القديمة واستبدلها بهذا الكود */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(10, 10, 10, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #3E2723;
-  padding: 12px 0;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  height: auto; /* تأكد أن الارتفاع تلقائي وليس ثابتاً */
-}
-
-.nav-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  width: 100%;
-}
-
-/* أضف هذا الجزء أيضاً لضمان عدم وجود مساحات فارغة في الموبايل */
-@media (max-width: 768px) {
-  .navbar {
+     .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 213, 79, 0.1);
     padding: 8px 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 60px;
+    display: flex;
+    align-items: center;
   }
+
+  .navbar-hidden {
+    transform: translateY(-100%);
+  }
+
   .nav-inner {
-    padding: 0 15px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-}
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .logo-area:hover {
+    opacity: 0.8;
+  }
+
+  main.app-container {
+    margin-top: 80px;
+  }
   /* Animations */
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .animate-entry { animation: fadeInUp 0.5s ease-out forwards; }
@@ -940,28 +954,42 @@ useEffect(() => {
       
       {!user ? <LoginScreen onLogin={login} /> : (
         <>
-          <nav className="navbar">
-            <div className="app-container nav-inner">
-              <div className="flex items-center gap-2 pointer" onClick={() => setView('home')}>
-                 <div style={{ background: '#000', padding: '6px', borderRadius: '6px', border: '1px solid #FFD54F' }}><Terminal size={20} className="text-gold"/></div>
-                 <div><h1 className="font-cairo text-white" style={{ fontSize: '18px', fontWeight: 'bold' }}>CS PROMAX</h1><span className="font-code" style={{ fontSize: '10px', color: '#888' }}>BATCH 21</span></div>
-              </div>
-              <div className="hidden md-block relative" style={{ width: '350px' }}>
-                 <input type="text" placeholder="بحث..." className="hacker-input" style={{ padding: '8px 35px 8px 12px', fontSize: '0.9rem' }} onChange={e => { setSearch(e.target.value); if(e.target.value) setView('home'); }} />
-                 <Search className="absolute" style={{ right: '10px', top: '10px', color: '#666', pointerEvents: 'none' }} size={16}/>
-              </div>
-              <div className="flex items-center gap-3">
-                
- <div style={{ textAlign: 'right', display: window.innerWidth < 600 ? 'none' : 'block' }}><div className="text-gold font-cairo" style={{ fontSize: '0.8rem' }}>{user.name}</div></div>
-                 <button onClick={logout} style={{ background: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)', padding: '8px', borderRadius: '50%', color: '#ff4444', cursor: 'pointer' }}><LogOut size={18}/></button>
-              </div>
-            </div>
-            {showSearch && (
-              <div className="app-container md-hidden animate-entry" style={{ marginTop: '0', paddingTop: '0' }}>
-                <input autoFocus type="text" placeholder="ابحث عن مادة..." className="hacker-input" onChange={(e) => { setSearchTerm(e.target.value); if(e.target.value) setView('home'); }} />
-              </div>
-            )}
-          </nav>
+       <nav className={`navbar ${!isNavbarVisible ? 'navbar-hidden' : ''}`}>
+  <div className="nav-inner">
+    {/* جهة الشعار */}
+    <div className="logo-area" onClick={() => setView('home')}>
+      <div className="bg-gold/10 p-2 rounded-lg">
+        <Terminal className="text-gold" size={20} />
+      </div>
+      <span className="text-white font-black tracking-tighter text-lg font-code">
+        CS <span className="text-gold">PROMAX</span>
+      </span>
+    </div>
+
+    {/* جهة الأزرار */}
+    <div className="flex items-center gap-3">
+      {user && (
+        <>
+          <button 
+            onClick={() => setView('ai')} 
+            className={`p-2 rounded-full transition-colors ${view === 'ai' ? 'bg-gold text-black' : 'text-gray-400 hover:text-gold'}`}
+          >
+            <Bot size={20} />
+          </button>
+          
+          <div className="w-[1px] h-4 bg-gray-800 mx-1"></div>
+          
+          <button 
+            onClick={logout} 
+            className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+          >
+            <LogOut size={20} />
+          </button>
+        </>
+      )}
+    </div>
+  </div>
+</nav>
 
           <main className="app-container">
             {view !== 'home' && (
