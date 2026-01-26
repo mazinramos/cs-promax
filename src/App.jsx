@@ -147,28 +147,37 @@ const styles = `
   .btn-outline:hover { background: rgba(255, 213, 79, 0.1); }
 
   /* Navbar */
-   .navbar {
-    position: fixed; /* تغيير من sticky إلى fixed لضمان الثبات */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 213, 79, 0.1);
-    padding: 8px 0; /* تصغير المساحة العلوية والسفلية جداً */
-    transition: transform 0.3s ease-in-out; /* إضافة أنيميشن للإخفاء */
-  }
+   /* ابحث عن .navbar القديمة واستبدلها بهذا الكود */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #3E2723;
+  padding: 12px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  height: auto; /* تأكد أن الارتفاع تلقائي وليس ثابتاً */
+}
 
-  /* كلاس جديد سيتم إضافته بواسطة JS عند السكرول */
-  .navbar-hidden {
-    transform: translateY(-100%);
-  }
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
 
-  /* التأكد من أن المحتوى لا يختفي خلف النافبار */
-  main.app-container {
-    margin-top: 60px; 
+/* أضف هذا الجزء أيضاً لضمان عدم وجود مساحات فارغة في الموبايل */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 8px 0;
   }
+  .nav-inner {
+    padding: 0 15px;
+  }
+}
   /* Animations */
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .animate-entry { animation: fadeInUp 0.5s ease-out forwards; }
