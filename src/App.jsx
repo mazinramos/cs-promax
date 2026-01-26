@@ -954,42 +954,28 @@ useEffect(() => {
       
       {!user ? <LoginScreen onLogin={login} /> : (
         <>
-       <nav className={`navbar ${!isNavbarVisible ? 'navbar-hidden' : ''}`}>
-  <div className="nav-inner">
-    {/* جهة الشعار */}
-    <div className="logo-area" onClick={() => setView('home')}>
-      <div className="bg-gold/10 p-2 rounded-lg">
-        <Terminal className="text-gold" size={20} />
-      </div>
-      <span className="text-white font-black tracking-tighter text-lg font-code">
-        CS <span className="text-gold">PROMAX</span>
-      </span>
-    </div>
-
-    {/* جهة الأزرار */}
-    <div className="flex items-center gap-3">
-      {user && (
-        <>
-          <button 
-            onClick={() => setView('ai')} 
-            className={`p-2 rounded-full transition-colors ${view === 'ai' ? 'bg-gold text-black' : 'text-gray-400 hover:text-gold'}`}
-          >
-            <Bot size={20} />
-          </button>
-          
-          <div className="w-[1px] h-4 bg-gray-800 mx-1"></div>
-          
-          <button 
-            onClick={logout} 
-            className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-          >
-            <LogOut size={20} />
-          </button>
-        </>
-      )}
-    </div>
-  </div>
-</nav>
+         <nav className="navbar">
+            <div className="app-container nav-inner">
+              <div className="flex items-center gap-2 pointer" onClick={() => setView('home')}>
+                 <div style={{ background: '#000', padding: '6px', borderRadius: '6px', border: '1px solid #FFD54F' }}><Terminal size={20} className="text-gold"/></div>
+                 <div><h1 className="font-cairo text-white" style={{ fontSize: '18px', fontWeight: 'bold' }}>CS PROMAX</h1><span className="font-code" style={{ fontSize: '10px', color: '#888' }}>BATCH 21</span></div>
+              </div>
+              <div className="hidden md-block relative" style={{ width: '350px' }}>
+                 <input type="text" placeholder="بحث..." className="hacker-input" style={{ padding: '8px 35px 8px 12px', fontSize: '0.9rem' }} onChange={e => { setSearch(e.target.value); if(e.target.value) setView('home'); }} />
+                 <Search className="absolute" style={{ right: '10px', top: '10px', color: '#666', pointerEvents: 'none' }} size={16}/>
+              </div>
+              <div className="flex items-center gap-3">
+                
+ <div style={{ textAlign: 'right', display: window.innerWidth < 600 ? 'none' : 'block' }}><div className="text-gold font-cairo" style={{ fontSize: '0.8rem' }}>{user.name}</div></div>
+                 <button onClick={logout} style={{ background: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)', padding: '8px', borderRadius: '50%', color: '#ff4444', cursor: 'pointer' }}><LogOut size={18}/></button>
+              </div>
+            </div>
+            {showSearch && (
+              <div className="app-container md-hidden animate-entry" style={{ marginTop: '0', paddingTop: '0' }}>
+                <input autoFocus type="text" placeholder="ابحث عن مادة..." className="hacker-input" onChange={(e) => { setSearchTerm(e.target.value); if(e.target.value) setView('home'); }} />
+              </div>
+            )}
+          </nav>
 
           <main className="app-container">
             {view !== 'home' && (
