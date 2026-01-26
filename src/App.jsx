@@ -1039,11 +1039,12 @@ useEffect(() => {
                 style={{ 
                     background: 'rgba(255,0,0,0.1)', 
                     border: '1px solid rgba(255,0,0,0.3)', 
-                    padding: '18px', 
+                    padding: '12px', 
                     borderRadius: '12px', 
                     color: '#ff4444', 
                     cursor: 'pointer',
-                    marginLeft: '10px'
+                    marginLeft: '10px',
+                    marginright: '60',
                 }}
             >
                 <LogOut size={18}/>
