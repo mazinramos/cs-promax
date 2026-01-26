@@ -967,26 +967,21 @@ useEffect(() => {
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
 
-// أضف هذا الكود داخل useEffect الأول في الدالة الرئيسية App أو CsProMaxV29
+
 useEffect(() => {
-  // دالة التعامل مع ضغطة زر الرجوع في الهاتف
   const handlePopState = (event) => {
     if (view !== 'home') {
-      // إذا لم يكن المستخدم في الصفحة الرئيسية، يمنع الخروج ويرجعه خطوة للخلف في المنصة
-      event.preventDefault();
+            event.preventDefault();
       if (view === 'content') setView('subjects');
       else if (view === 'subjects' || view === 'ai') setView('home');
     }
   };
 
-  // إضافة "حالة" وهمية في تاريخ المتصفح عند كل تغيير في الـ view
   window.history.pushState({ view }, "");
-
-  // الاستماع لزر الرجوع
   window.addEventListener('popstate', handlePopState);
   
   return () => window.removeEventListener('popstate', handlePopState);
-}, [view]); // السطر ده مهم جداً عشان يتحدث مع كل تغيير صفحة
+}, [view]); 
 
   const filtered = initialData.map(s => ({
     ...s, subjects: s.subjects.filter(sub => sub.name.toLowerCase().includes(search.toLowerCase()) || sub.code.toLowerCase().includes(search.toLowerCase()))
@@ -1043,12 +1038,12 @@ useEffect(() => {
                 onClick={logout} 
                 style={{ 
                     background: 'rgba(255,0,0,0.1)', 
-                    border: '1px solid rgba(255,0,0,0.3)', 
+                    
                     padding: '12', 
                     borderRadius: '12px', 
                     color: '#ff4444', 
                     cursor: 'pointer',
-                    marginLeft: '30px'
+                    marginLeft: '10px'
                 }}
             >
                 <LogOut size={18}/>
