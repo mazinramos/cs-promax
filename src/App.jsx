@@ -905,7 +905,7 @@ export default function CsProMaxV28() {
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
 
-useEffect() => {
+useEffect(() => {
   const controlNavbar = () => {
     if (window.scrollY > lastScrollY && window.scrollY > 100) { 
       // إذا نزل المستخدم للأسفل، اخفِ النافبار
@@ -919,7 +919,7 @@ useEffect() => {
 
   window.addEventListener('scroll', controlNavbar);
   return () => window.removeEventListener('scroll', controlNavbar);
-}, [lastScrollY]);};
+}, [lastScrollY]);
 
 useEffect(() => { const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 const [lastScrollY, setLastScrollY] = useState(0);
