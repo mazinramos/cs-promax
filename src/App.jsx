@@ -1010,7 +1010,7 @@ useEffect(() => {
                     CS PROMAX
                 </h1>
                 <span className="font-code" style={{ fontSize: '10px', color: '#888' }}>
-                    BATCH 21 & 22
+                    BATCH 21
                 </span>
             </div>
         </div>
@@ -1048,7 +1048,7 @@ useEffect(() => {
                     borderRadius: '12px', 
                     color: '#ff4444', 
                     cursor: 'pointer',
-                    marginLeft: 'auto'
+                    marginLeft: '30px'
                 }}
             >
                 <LogOut size={18}/>
