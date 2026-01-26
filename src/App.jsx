@@ -906,22 +906,6 @@ const [lastScrollY, setLastScrollY] = useState(0);
 const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 const [lastScrollY, setLastScrollY] = useState(0);
 
-useEffect(() => {
-  const controlNavbar = () => {
-    if (window.scrollY > lastScrollY && window.scrollY > 100) { 
-      // إذا نزل المستخدم للأسفل، اخفِ النافبار
-      setIsNavbarVisible(false);
-    } else { 
-      // إذا صعد المستخدم للأعلى، أظهر النافبار
-      setIsNavbarVisible(true);
-    }
-    setLastScrollY(window.scrollY);
-  };
-
-  window.addEventListener('scroll', controlNavbar);
-  return () => window.removeEventListener('scroll', controlNavbar);
-}, [lastScrollY]);
-
   useEffect(() => { const u = localStorage.getItem('cs_promax_v28'); if(u) setUser(JSON.parse(u)); }, []);
   const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
   const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
