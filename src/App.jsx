@@ -101,6 +101,38 @@ const styles = `
     opacity: 0.05;
     transform: rotate(-15deg);
   }
+   
+   @keyframes pulse-green {
+  0% { transform: scale(1); opacity: 0.6; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+  100% { transform: scale(1); opacity: 0.6; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.online-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 4px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  margin-bottom: 8px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  animation: pulse-green 2s infinite;
+}
+
+.status-text {
+  color: #22c55e;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
 
   /* Inputs */
   .hacker-input {
