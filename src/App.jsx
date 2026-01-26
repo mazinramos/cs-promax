@@ -1038,8 +1038,8 @@ useEffect(() => {
                 onClick={logout} 
                 style={{ 
                     background: 'rgba(255,0,0,0.1)', 
-                    
-                    padding: '12', 
+                    border: '1px solid rgba(255,0,0,0.3)', 
+                    padding: '18px', 
                     borderRadius: '12px', 
                     color: '#ff4444', 
                     cursor: 'pointer',
