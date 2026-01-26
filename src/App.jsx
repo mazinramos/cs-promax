@@ -121,6 +121,25 @@ const styles = `
   }
 
   /* Buttons */
+  .btn-red {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ff4444; /* اللون الأحمر */
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-red:hover {
+  background-color: #cc0000; /* أحمر داكن عند مرور الماوس */
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  transform: translateY(-2px);
+}
   .btn-gold {
     background: var(--gold);
     color: #000;
@@ -1045,7 +1064,7 @@ useEffect(() => {
                           {activeSub.videos.map((vid, i) => (
                             <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
                               <div style={{ marginBottom: '10px' }}><strong className="text-white block">{vid.title}</strong><span style={{ fontSize: '12px', color: '#888' }}>{vid.duration}</span></div>
-                              <a href={vid.link} target="_blank" className="btn-gold btn-red">مشاهدة</a>
+                              <a href={vid.link} target="_blank" className="btn-red btn-red">مشاهدة</a>
                             </div>
                           ))}
                         </div>
