@@ -229,19 +229,39 @@ const styles = `
   height: 85px;
 }
 
+
 .footer {
   width: 100%;
-  padding: 20px 0; 
+  padding: 12px 0;
   background: var(--panel-bg);
   border-top: 1px solid var(--border-color);
   text-align: center;
-  margin-top: 40px;
+  margin-top: 30px; 
 }
 
-.footer-text {
-  color: var(--text-secondary);
-  font-size: 12px;
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-main-text {
+  color: var(--green-accent);
   font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.footer-sub-text {
+  color: #555;
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+main.app-container {
+  padding-bottom: 50px;
 }
 
 main.app-container {
@@ -1195,10 +1215,12 @@ useEffect(() => {
             )}
           </main>
 
-          <footer className="hacker-card" style={{ marginTop: 'auto', borderRadius: '0', borderLeft: '0', borderRight: '0', textAlign: 'center' }}>
-            <p className="text-gold font-bold">CS PROMAX</p>
-            <p className="font-code text-gray-500 text-xs">SECURE_SYSTEM_V28.0</p>
-          </footer>
+ <footer className="footer">
+  <div className="footer-content">
+    <div className="footer-main-text">CS PROMAX</div>
+    <div className="footer-sub-text">SECURE_SYSTEM_V28.0</div>
+  </div>
+</footer>
         </>
       )}
     </div>
