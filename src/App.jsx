@@ -1008,58 +1008,89 @@ const LoginScreen = ({ onLogin }) => {
    5. MAIN APP
    ================================================================================= */
 export default function CsProMaxV28() {
+  // --- 1. تعريف حالات التطبيق (States) ---
   const [user, setUser] = useState(null);
   const [view, setView] = useState('home');
   const [activeSem, setActiveSem] = useState(null);
   const [activeSub, setActiveSub] = useState(null);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [isLight, setIsLight] = useState(false);
 
-const [isLight, setIsLight] = useState(false);
-
-// كود يراقب الحالة ويغير كلاس الـ body تلقائياً
-useEffect(() => {
-  if (isLight) {
-    document.body.classList.add('light-theme');
-  } else {
-    document.body.classList.remove('light-theme');
-  }
-}, [isLight]);
-
-useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [view, activeSem]);
-
-  useEffect(() => { const u = localStorage.getItem('cs_promax_v28'); if(u) setUser(JSON.parse(u)); }, []);
-  const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
-  const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
-
-
-useEffect(() => {
-  const handlePopState = (event) => {
-    if (view !== 'home') {
-            event.preventDefault();
-      if (view === 'content') setView('subjects');
-      else if (view === 'subjects' || view === 'ai') setView('home');
+  // --- 2. إدارة الثيم (الأخضر والوضع الفاتح) ---
+  useEffect(() => {
+    if (isLight) {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
     }
+  }, [isLight]);
+
+  // --- 3. التحكم في التمرير عند تغيير الصفحة ---
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [view, activeSem, activeSub]);
+
+  // --- 4. إدارة الجلسة وتخزين البيانات المحلية ---
+  useEffect(() => {
+    const savedUser = localStorage.getItem('cs_promax_v28');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('cs_promax_v28');
+      }
+    }
+  }, []);
+
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('cs_promax_v28', JSON.stringify(userData));
   };
 
-  window.history.pushState({ view }, "");
-  window.addEventListener('popstate', handlePopState);
-  
-  return () => window.removeEventListener('popstate', handlePopState);
-}, [view]); 
+  const logout = () => {
+    localStorage.removeItem('cs_promax_v28');
+    setUser(null);
+    setView('home');
+  };
 
-  const filtered = initialData.map(s => ({
-    ...s, subjects: s.subjects.filter(sub => sub.name.toLowerCase().includes(search.toLowerCase()) || sub.code.toLowerCase().includes(search.toLowerCase()))
+  // --- 5. التعامل مع زر الرجوع في المتصفح والموبايل ---
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (view !== 'home') {
+        event.preventDefault();
+        if (view === 'content') {
+          setView('subjects');
+        } else if (view === 'subjects' || view === 'ai') {
+          setView('home');
+        }
+      }
+    };
+
+    window.history.pushState({ view }, "");
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [view]);
+
+  // --- 6. نظام البحث وتصفية البيانات ---
+  const filteredData = initialData.map(s => ({
+    ...s,
+    subjects: s.subjects.filter(sub =>
+      sub.name.toLowerCase().includes(search.toLowerCase()) ||
+      sub.code.toLowerCase().includes(search.toLowerCase())
+    )
   })).filter(s => s.subjects.length > 0);
 
+  // --- 7. واجهة العرض (Render) ---
   return (
     <div dir="rtl">
       <style>{styles}</style>
       <InteractiveMatrix />
-      
-      {!user ? <LoginScreen onLogin={login} /> : (
+
+      {!user ? (
+        <LoginScreen onLogin={login} />
+      ) : (
         <>
         <nav className="navbar">
     <div className="app-container nav-inner">
