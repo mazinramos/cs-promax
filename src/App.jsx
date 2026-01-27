@@ -8,31 +8,22 @@ const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fira+Code:wght@400;500;700&family=Tajawal:wght@400;500;700;800&display=swap');
 
   :root {
-  /* قيم الوضع الداكن (الأساسي) */
-  --app-bg: #000000;
-  --panel-bg: rgba(15, 15, 15, 0.95);
-  --text-main: #e0e0e0;
-  --text-white: #ffffff;
-  --green-accent: #4ade80; 
-  --border-color: rgba(74, 222, 128, 0.2);
-}
+    --gold: #FFD54F;
+    --dark-bg: #000000;
+    --panel-bg: rgba(15, 15, 15, 0.95);
+    --border-color: rgba(255, 213, 79, 0.2);
+  }
 
-/* قيم الوضع الفاتح - يتم تفعيلها عند إضافة هذا الكلاس */
-.light-theme {
-  --app-bg: #f3f4f6; /* رمادي فاتح جداً */
-  --panel-bg: #ffffff; /* كروت بيضاء */
-  --text-main: #374151; /* نص رمادي غامق */
-  --text-white: #111827; /* نص أسود */
-  --green-accent: #16a34a; /* أخضر أغمق قليلاً ليظهر بوضوح على الأبيض */
-  --border-color: rgba(0, 0, 0, 0.1);
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-/* تأكد أن الـ body يستخدم المتغيرات */
-body {
-  background-color: var(--app-bg);
-  color: var(--text-main);
-  transition: all 0.3s ease;
-}
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: var(--dark-bg);
+    color: #e0e0e0;
+    overflow-x: hidden;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
 
   /* Utility Classes */
   .font-cairo { font-family: 'Cairo', sans-serif; }
@@ -1008,89 +999,47 @@ const LoginScreen = ({ onLogin }) => {
    5. MAIN APP
    ================================================================================= */
 export default function CsProMaxV28() {
-  // --- 1. تعريف حالات التطبيق (States) ---
   const [user, setUser] = useState(null);
   const [view, setView] = useState('home');
   const [activeSem, setActiveSem] = useState(null);
   const [activeSub, setActiveSub] = useState(null);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
-  const [isLight, setIsLight] = useState(false);
 
-  // --- 2. إدارة الثيم (الأخضر والوضع الفاتح) ---
-  useEffect(() => {
-    if (isLight) {
-      document.body.classList.add('light-theme');
-    } else {
-      document.body.classList.remove('light-theme');
-    }
-  }, [isLight]);
-
-  // --- 3. التحكم في التمرير عند تغيير الصفحة ---
-  useEffect(() => {
+useEffect(() => {
     window.scrollTo(0, 0);
-  }, [view, activeSem, activeSub]);
+  }, [view, activeSem]);
 
-  // --- 4. إدارة الجلسة وتخزين البيانات المحلية ---
-  useEffect(() => {
-    const savedUser = localStorage.getItem('cs_promax_v28');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        localStorage.removeItem('cs_promax_v28');
-      }
+  useEffect(() => { const u = localStorage.getItem('cs_promax_v28'); if(u) setUser(JSON.parse(u)); }, []);
+  const login = (u) => { setUser(u); localStorage.setItem('cs_promax_v28', JSON.stringify(u)); };
+  const logout = () => { localStorage.removeItem('cs_promax_v28'); setUser(null); setView('home'); };
+
+
+useEffect(() => {
+  const handlePopState = (event) => {
+    if (view !== 'home') {
+            event.preventDefault();
+      if (view === 'content') setView('subjects');
+      else if (view === 'subjects' || view === 'ai') setView('home');
     }
-  }, []);
-
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('cs_promax_v28', JSON.stringify(userData));
   };
 
-  const logout = () => {
-    localStorage.removeItem('cs_promax_v28');
-    setUser(null);
-    setView('home');
-  };
+  window.history.pushState({ view }, "");
+  window.addEventListener('popstate', handlePopState);
+  
+  return () => window.removeEventListener('popstate', handlePopState);
+}, [view]); 
 
-  // --- 5. التعامل مع زر الرجوع في المتصفح والموبايل ---
-  useEffect(() => {
-    const handlePopState = (event) => {
-      if (view !== 'home') {
-        event.preventDefault();
-        if (view === 'content') {
-          setView('subjects');
-        } else if (view === 'subjects' || view === 'ai') {
-          setView('home');
-        }
-      }
-    };
-
-    window.history.pushState({ view }, "");
-    window.addEventListener('popstate', handlePopState);
-    
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [view]);
-
-  // --- 6. نظام البحث وتصفية البيانات ---
-  const filteredData = initialData.map(s => ({
-    ...s,
-    subjects: s.subjects.filter(sub =>
-      sub.name.toLowerCase().includes(search.toLowerCase()) ||
-      sub.code.toLowerCase().includes(search.toLowerCase())
-    )
+  const filtered = initialData.map(s => ({
+    ...s, subjects: s.subjects.filter(sub => sub.name.toLowerCase().includes(search.toLowerCase()) || sub.code.toLowerCase().includes(search.toLowerCase()))
   })).filter(s => s.subjects.length > 0);
 
-  // --- 7. واجهة العرض (Render) ---
   return (
     <div dir="rtl">
       <style>{styles}</style>
       <InteractiveMatrix />
-
-      {!user ? (
-        <LoginScreen onLogin={login} />
-      ) : (
+      
+      {!user ? <LoginScreen onLogin={login} /> : (
         <>
         <nav className="navbar">
     <div className="app-container nav-inner">
@@ -1131,23 +1080,6 @@ export default function CsProMaxV28() {
                     {user?.email || ''}
                 </div>
             </div>
-
-<button 
-  onClick={() => setIsLight(!isLight)} 
-  style={{ 
-    background: 'rgba(74, 222, 128, 0.1)', 
-    border: '1px solid var(--border-color)', 
-    padding: '8px', 
-    borderRadius: '12px', 
-    color: 'var(--green-accent)', 
-    cursor: 'pointer',
-    marginRight: '10px',
-    display: 'flex',
-    alignItems: 'center'
-  }}
->
-  {isLight ? <Moon size={20}/> : <Sun size={20}/>}
-</button>
 
             <button 
                 onClick={logout} 
