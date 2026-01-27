@@ -378,12 +378,24 @@ const initialData = [
   { title: "Lec 3.0: Constructors", type: "pdf", link: "https://drive.google.com/file/d/1y1i4sjKFSS_Rc0DTFSXSDr8srk9k75Ig/view?usp=drivesdk", note: "دوال البناء" },
   { title: "Lec 3.1: Destructors", type: "pdf", link: "https://drive.google.com/file/d/1eef9fPej3rqChJFJDetmUaZUEMnOMPZO/view?usp=drivesdk", note: "دوال الهدم" },
   { title: "Lec 3.2: Overloading", type: "pdf", link: "https://drive.google.com/file/d/1TG8gahEohfg6ITZ9UZ0K244UoZu0sodn/view?usp=drivesdk", note: "التحميل الزائد (Operator Overloading)" },
-  { title: "Lec 4: Pointers & Arrays", type: "pdf", link: "https://drive.google.com/file/d/1rwB7PL5M0qGT85W4cqCNpQemF0myQs4b/view?usp=drivesdk", note: "استخدام المؤشرات ومصفوفة الكائنات" }
+  { title: "Lec 4: Pointers & Arrays", type: "pdf", link: "https://drive.google.com/file/d/1rwB7PL5M0qGT85W4cqCNpQemF0myQs4b/view?usp=drivesdk", note: "استخدام المؤشرات ومصفوفة الكائنات" }, 
+  { title: "Lec 5: Overloading (PDF)", 
+  type: "pdf", 
+  link: "https://drive.google.com/file/d/104sR1R0xWeqkddC_xRd8E7GlyHejV7qR/view?usp=drivesdk", 
+  note: "التحميل الزائد - ملف الشرح" 
+},
+
+
 ],
  videos: [
   { title: "Lec 1 Video: الهياكل والمقدمة", duration: "شرح", link: "https://drive.google.com/file/d/10NS3J-fKiD0oBYjrdNmPdlmxNcF5XBfi/view?usp=drivesdk" },
   { title: "Lec 3.1 Video: دوال الهدم", duration: "شرح", link: "https://drive.google.com/file/d/1wOzWXscJojUONTUNDfP8utbuq-FEB4q4/view?usp=drivesdk" },
-  { title: "Lec 4 Video: المؤشرات والمصفوفات", duration: "شرح", link: "https://drive.google.com/file/d/1_FJROjdlII4eO0sUnxNkA7BhYL6EUqa7/view?usp=drivesdk" }
+  { title: "Lec 4 Video: المؤشرات والمصفوفات", duration: "شرح", link: "https://drive.google.com/file/d/1_FJROjdlII4eO0sUnxNkA7BhYL6EUqa7/view?usp=drivesdk" }, 
+  { title: "Lec 5: Overloading (Video)", 
+  type: "video", 
+  link: "https://drive.google.com/file/d/19WFR6V2UgFS_pKjp9a1KVFGeof3_569W/view?usp=drivesdk", 
+  note: "التحميل الزائد - شرح فيديو" 
+},
 ],
  labs: [
   {
