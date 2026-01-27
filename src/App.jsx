@@ -8,22 +8,31 @@ const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fira+Code:wght@400;500;700&family=Tajawal:wght@400;500;700;800&display=swap');
 
   :root {
-    --gold: #FFD54F;
-    --dark-bg: #000000;
-    --panel-bg: rgba(15, 15, 15, 0.95);
-    --border-color: rgba(255, 213, 79, 0.2);
-  }
+  /* قيم الوضع الداكن (الأساسي) */
+  --app-bg: #000000;
+  --panel-bg: rgba(15, 15, 15, 0.95);
+  --text-main: #e0e0e0;
+  --text-white: #ffffff;
+  --green-accent: #4ade80; 
+  --border-color: rgba(74, 222, 128, 0.2);
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+/* قيم الوضع الفاتح - يتم تفعيلها عند إضافة هذا الكلاس */
+.light-theme {
+  --app-bg: #f3f4f6; /* رمادي فاتح جداً */
+  --panel-bg: #ffffff; /* كروت بيضاء */
+  --text-main: #374151; /* نص رمادي غامق */
+  --text-white: #111827; /* نص أسود */
+  --green-accent: #16a34a; /* أخضر أغمق قليلاً ليظهر بوضوح على الأبيض */
+  --border-color: rgba(0, 0, 0, 0.1);
+}
 
-  body {
-    font-family: 'Tajawal', sans-serif;
-    background-color: var(--dark-bg);
-    color: #e0e0e0;
-    overflow-x: hidden;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
+/* تأكد أن الـ body يستخدم المتغيرات */
+body {
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  transition: all 0.3s ease;
+}
 
   /* Utility Classes */
   .font-cairo { font-family: 'Cairo', sans-serif; }
@@ -1006,6 +1015,17 @@ export default function CsProMaxV28() {
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
 
+const [isLight, setIsLight] = useState(false);
+
+// كود يراقب الحالة ويغير كلاس الـ body تلقائياً
+useEffect(() => {
+  if (isLight) {
+    document.body.classList.add('light-theme');
+  } else {
+    document.body.classList.remove('light-theme');
+  }
+}, [isLight]);
+
 useEffect(() => {
     window.scrollTo(0, 0);
   }, [view, activeSem]);
@@ -1080,6 +1100,23 @@ useEffect(() => {
                     {user?.email || ''}
                 </div>
             </div>
+
+<button 
+  onClick={() => setIsLight(!isLight)} 
+  style={{ 
+    background: 'rgba(74, 222, 128, 0.1)', 
+    border: '1px solid var(--border-color)', 
+    padding: '8px', 
+    borderRadius: '12px', 
+    color: 'var(--green-accent)', 
+    cursor: 'pointer',
+    marginRight: '10px',
+    display: 'flex',
+    alignItems: 'center'
+  }}
+>
+  {isLight ? <Moon size={20}/> : <Sun size={20}/>}
+</button>
 
             <button 
                 onClick={logout} 
