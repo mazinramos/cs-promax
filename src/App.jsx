@@ -229,6 +229,21 @@ const styles = `
   height: 85px;
 }
 
+.footer {
+  width: 100%;
+  padding: 20px 0; 
+  background: var(--panel-bg);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footer-text {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: 'Cairo', sans-serif;
+}
+
 main.app-container {
   padding-top: calc(95px + env(safe-area-inset-top));
   padding-bottom: env(safe-area-inset-bottom);
