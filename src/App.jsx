@@ -920,7 +920,8 @@ int main() {
 }` 
   }
 ],
- }, { name: "Sys Analysis II", code: "IS202", lectures: [], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [
+ }, { name: "Sys Analysis II", code: "IS202", lectures: [{ title: "Lec 11: Data Dictionary", type: "pdf", link: "https://drive.google.com/file/d/13hRH17XObS5JbO64PedN5XpjnnKj87HX/view?usp=drivesdk", note: "قاموس البيانات" },
+{ title: "Lec 12: Design Phase", type: "pdf", link: "https://drive.google.com/file/d/11qr9JLNrzQ38prIfgN0mCrUMxK8YVotM/view?usp=drivesdk", note: "مرحلة التصميم" }], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [
     { 
       title: "1- مقدمة إلى إدارة الملفات", 
       type: "pdf", 
