@@ -927,7 +927,160 @@ int main() {
       link: "https://drive.google.com/file/d/16nIGOEmgzYTmAbxsExa2-l09wE5Ufo5Z/view?usp=drivesdk",
       note: "مقدمة شاملة عن أنظمة الملفات"
     }
-  ], videos: [], labs: [], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
+  ], videos: [], labs: [
+{
+  title: "Lec 1: Create and Write File",
+  description: "إنشاء ملف نصي والكتابة عليه باستخدام ofstream.",
+  code: `#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main() {
+    ofstream outFile("example.txt");
+
+    if (outFile) {
+        outFile << "Hello C++ File Handling" << endl;
+        outFile << "Line 2: Data stored successfully." << endl;
+        outFile.close();
+    }
+
+    return 0;
+}`
+},
+
+
+{
+  title: "Lec 2: Read Data from File",
+  description: "قراءة البيانات من ملف نصي وعرضها.",
+  code: `#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string line;
+    ifstream file("example.txt");
+
+    if (file) {
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    }
+
+    return 0;
+}`
+},
+
+{
+  title: "Lec 3: Append to File (ios::app)",
+  description: "الإضافة إلى نهاية الملف بدون مسح المحتوى القديم.",
+  code: `#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main() {
+    ofstream file("log.txt", ios::out | ios::app);
+
+    if (file) {
+        file << "New entry added to the end." << endl;
+        file.close();
+    }
+
+    return 0;
+}`
+},
+
+
+{
+  title: "Lec 4: Read and Write (ios::in | ios::out)",
+  description: "فتح الملف للقراءة والكتابة معاً والتحكم في المؤشر.",
+  code: `#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    fstream file("data.txt", ios::in | ios::out | ios::trunc);
+
+    if (file) {
+        file << "Initial_data";
+        file.seekg(0);
+        string content;
+        file >> content;
+        cout << content << endl;
+        file.close();
+    }
+
+    return 0;
+}`
+},
+
+
+{
+  title: "Lec 5: Save Struct to File",
+  description: "تخزين بيانات الطلاب (Struct) في ملف نصي.",
+  code: `#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+struct Student {
+    int id;
+    string name;
+    float gpa;
+};
+
+int main() {
+    Student s1 = {101, "Omer", 3.9};
+    ofstream file("students.txt", ios::app);
+
+    if (file) {
+        file << s1.id << " " << s1.name << " " << s1.gpa << endl;
+        file.close();
+    }
+
+    return 0;
+}`
+},
+
+
+{
+  title: "Lec 6: Read Struct from File",
+  description: "قراءة بيانات الهياكل المخزنة وعرضها.",
+  code: `#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+struct Student {
+    int id;
+    string name;
+    float gpa;
+};
+
+int main() {
+    Student s_input;
+    ifstream file("students.txt");
+
+    if (file) {
+        while (file >> s_input.id >> s_input.name >> s_input.gpa) {
+            cout << "ID: " << s_input.id << " | Name: " << s_input.name << " | GPA: " << s_input.gpa << endl;
+        }
+        file.close();
+    }
+
+    return 0;
+}`
+}
+
+], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
   { title: "Lec 1: Intro to OR", type: "pdf", link: "https://drive.google.com/file/d/1l0X6W9vEQXYAC7OOPFZS4Or-vUoSQtXc/view?usp=drivesdk", note: "بحوث العمليات واستخداماتها" },
   { title: "Lec 2: Decision Theory", type: "pdf", link: "https://drive.google.com/file/d/11GK2miG2z06Qj3suWEKO5IetBHZmqY-Y/view?usp=drivesdk", note: "نظرية اتخاذ القرار" },
   { title: "Lec 3: Certainty", type: "pdf", link: "https://drive.google.com/file/d/1oD53qJiGVwTwvo5rQIAQvrwG5aDMw4ZN/view?usp=drivesdk", note: "مفهوم التأكد" },
