@@ -374,42 +374,7 @@ const initialData = [
   { title: "6- نمذجة المعطيات", type: "pdf", link: "https://drive.google.com/file/d/14DZIVFqFZdXJKCJp1vo3V9Tjtk0BJyB5/view?usp=drivesdk" },
   { title: "7- مرحلة التصميم", type: "pdf", link: "https://drive.google.com/file/d/1yygCegXe82lQC7egbr52dlvci6KNSY6U/view?usp=drivesdk" },
   { title: "8- مرحلة التنفيذ", type: "pdf", link: "https://drive.google.com/file/d/1u_SpXnZI6od2hqmNKW-Lonsfp6YUAruS/view?usp=drivesdk" },
-],  videos: [], labs: [{ 
-    "title": "SQL: ترتيب وعرض البيانات (Sorting)", 
-    "type": "code", 
-    "link": "SELECT * FROM Students ORDER BY [اسم الطالب] ASC;", 
-    "note": "يعرض بيانات الطلاب مرتبين أبجدياً حسب الاسم" 
-  },
-  { 
-    "title": "SQL: البحث المتقدم (Wildcards)", 
-    "type": "code", 
-    "link": "SELECT * FROM Students WHERE [اسم الطالب] LIKE 'Omer*';", 
-    "note": "استخراج الطلاب الذين يبدأ اسمهم بـ 'عمر' باستخدام النجمة" 
-  },
-  { 
-    "title": "SQL: البحث في مدى محدد (Range Search)", 
-    "type": "code", 
-    "link": "SELECT * FROM Students WHERE [العمر] BETWEEN 20 AND 25;", 
-    "note": "فلترة الطلاب بناءً على المدى العمري" 
-  },
-  { 
-    "title": "SQL: العمليات الحسابية (Aggregation Functions)", 
-    "type": "code", 
-    "link": "SELECT MIN([العمر]) AS Smallest, MAX(Degree) AS Highest FROM Students, Results;", 
-    "note": "استخدام دالة MIN و MAX مع تسمية الأعمدة المستعارة AS" 
-  },
-  { 
-    "title": "SQL: تحديث البيانات (Update Action)", 
-    "type": "code", 
-    "link": "UPDATE Students SET [اسم الطالب] = 'Ahmed' WHERE [رقم الطالب] = 5;", 
-    "note": "تعديل سجل محدد في قاعدة البيانات بشرط الـ ID" 
-  },
-  { 
-    "title": "SQL: الربط بين 3 جداول (Triple Inner Join)", 
-    "type": "code", 
-    "link": "SELECT Students.[اسم الطالب], Subjects.subjectName, Results.Degree FROM (Students INNER JOIN Results ON Students.[رقم الطالب] = Results.std_ID) INNER JOIN Subjects ON Subjects.subID = Results.sub_ID;", 
-    "note": "أهم كود لربط الطلاب بالمواد وبالدرجات لإظهار النتيجة النهائية" 
-  },], assignments: [] },
+],  videos: [], labs: [], assignments: [] },
       { name: "Comm. Skills", code: "GEN201", lectures: [
   { title: "Lec 1-3: Concepts & Models", type: "pdf", link: "https://drive.google.com/file/d/1GYxwX659C_BqcWFVKJK7Acp0gqmueGip/view?usp=drivesdk", note: "المفهوم، العناصر، ونماذج الاتصال" },
   { title: "Lec 4: Reading Skills", type: "pdf", link: "https://drive.google.com/file/d/1L1UUVvrzrO3TOmtO7UsVK438q-u5JooX/view?usp=drivesdk", note: "مهارات القراءة" },
@@ -956,7 +921,42 @@ int main() {
   }
 ],
  }, { name: "Sys Analysis II", code: "IS202", lectures: [{ title: "Lec 1: Data Dictionary", type: "pdf", link: "https://drive.google.com/file/d/13hRH17XObS5JbO64PedN5XpjnnKj87HX/view?usp=drivesdk", note: "قاموس البيانات" },
-{ title: "Lec 2: Design Phase", type: "pdf", link: "https://drive.google.com/file/d/11qr9JLNrzQ38prIfgN0mCrUMxK8YVotM/view?usp=drivesdk", note: "مرحلة التصميم" }], videos: [], labs: [], assignments: [] }, { name: "File Management", code: "CS205", lectures: [
+{ title: "Lec 2: Design Phase", type: "pdf", link: "https://drive.google.com/file/d/11qr9JLNrzQ38prIfgN0mCrUMxK8YVotM/view?usp=drivesdk", note: "مرحلة التصميم" }], videos: [], labs: [], assignments: [{ 
+    "title": "SQL: ترتيب وعرض البيانات (Sorting)", 
+    "type": "code", 
+    "link": "SELECT * FROM Students ORDER BY [اسم الطالب] ASC;", 
+    "note": "يعرض بيانات الطلاب مرتبين أبجدياً حسب الاسم" 
+  },
+  { 
+    "title": "SQL: البحث المتقدم (Wildcards)", 
+    "type": "code", 
+    "link": "SELECT * FROM Students WHERE [اسم الطالب] LIKE 'Omer*';", 
+    "note": "استخراج الطلاب الذين يبدأ اسمهم بـ 'عمر' باستخدام النجمة" 
+  },
+  { 
+    "title": "SQL: البحث في مدى محدد (Range Search)", 
+    "type": "code", 
+    "link": "SELECT * FROM Students WHERE [العمر] BETWEEN 20 AND 25;", 
+    "note": "فلترة الطلاب بناءً على المدى العمري" 
+  },
+  { 
+    "title": "SQL: العمليات الحسابية (Aggregation Functions)", 
+    "type": "code", 
+    "link": "SELECT MIN([العمر]) AS Smallest, MAX(Degree) AS Highest FROM Students, Results;", 
+    "note": "استخدام دالة MIN و MAX مع تسمية الأعمدة المستعارة AS" 
+  },
+  { 
+    "title": "SQL: تحديث البيانات (Update Action)", 
+    "type": "code", 
+    "link": "UPDATE Students SET [اسم الطالب] = 'Ahmed' WHERE [رقم الطالب] = 5;", 
+    "note": "تعديل سجل محدد في قاعدة البيانات بشرط الـ ID" 
+  },
+  { 
+    "title": "SQL: الربط بين 3 جداول (Triple Inner Join)", 
+    "type": "code", 
+    "link": "SELECT Students.[اسم الطالب], Subjects.subjectName, Results.Degree FROM (Students INNER JOIN Results ON Students.[رقم الطالب] = Results.std_ID) INNER JOIN Subjects ON Subjects.subID = Results.sub_ID;", 
+    "note": "أهم كود لربط الطلاب بالمواد وبالدرجات لإظهار النتيجة النهائية" 
+  },] }, { name: "File Management", code: "CS205", lectures: [
     { 
       title: "1- مقدمة إلى إدارة الملفات", 
       type: "pdf", 
