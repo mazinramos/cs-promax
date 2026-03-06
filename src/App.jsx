@@ -957,6 +957,7 @@ int main() {
     "link": "SELECT Students.[اسم الطالب], Subjects.subjectName, Results.Degree FROM (Students INNER JOIN Results ON Students.[رقم الطالب] = Results.std_ID) INNER JOIN Subjects ON Subjects.subID = Results.sub_ID;", 
     "note": "أهم كود لربط الطلاب بالمواد وبالدرجات لإظهار النتيجة النهائية" 
   },] }, { name: "File Management", code: "CS205", lectures: [
+    { title: "All Lap's Codes :", type: "pdf", link: "https://drive.google.com/file/d/1X3dzIv-6j-yDb_psj48P-IbB1Vx0Rb3e/view?usp=drive_link", note: "اكواد المقرر كلها" },
     { 
       title: "1- مقدمة إلى إدارة الملفات", 
       type: "pdf", 
