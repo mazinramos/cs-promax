@@ -963,7 +963,44 @@ int main() {
       type: "pdf", 
       link: "https://drive.google.com/file/d/16nIGOEmgzYTmAbxsExa2-l09wE5Ufo5Z/view?usp=drivesdk",
       note: "مقدمة شاملة عن أنظمة الملفات"
-    }
+    },
+     { 
+    title: "Lec 2: File Systems", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1D0XuDAKH5bvP5zWZTxfQUnoOh77bpLN_/view?usp=drivesdk", 
+    note: "نظم الملفات وهيكلية تخزين البيانات" 
+  },
+  { 
+    title: "Lec 3: Directory Management", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1DeMqINfCmaTmPCbWyQLqbqHHU42k501O/view?usp=drivesdk", 
+    note: "إدارة المجلدات والمسارات وتنظيم الأرشيف" 
+  },
+  { 
+    title: "Lec 4: File Protection And Security", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1o-YTM4NwEIppE-upforYUZepnIvYgf3V/view?usp=drivesdk", 
+    note: "حماية الملفات وصلاحيات الوصول والتشفير" 
+  },
+  { 
+    title: "Lec 5: Backup And File Recovery", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1uJhgSbx2Glydr0T1QdTWbNbEOTYxeY8N/view?usp=drivesdk", 
+    note: "النسخ الاحتياطي وطرق استعادة الملفات المحذوفة" 
+  },
+  { 
+    title: "Lec 6: Programmatic File Handling", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1WE5nvUkmCKXYJs2vgEogCdHMIMathRU9/view?usp=drivesdk", 
+    note: "المعالجة البرمجية للملفات والتعامل مع البيانات" 
+  },
+  { 
+    title: "Lec 7: Modern Developments In FM", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1mbnkv4eITPa8G9b1IukNccJR4j_7sQOP/view?usp=drivesdk", 
+    note: "التطورات الحديثة في تقنيات إدارة الملفات" 
+  }
+
   ], videos: [], labs: [
 {
   title: "Lec 1: Create and Write File",
