@@ -1154,7 +1154,14 @@ int main() {
 }`
 }
 
-], assignments: [] }, { name: "HCI", code: "IS203", lectures: [], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
+], assignments: [] }, { name: "HCI", code: "IS203", lectures: [
+{ 
+    title: "Lec 1: HCI", 
+    type: "pdf", 
+    link: "https://drive.google.com/file/d/1xhZz6WfIE6apJbul9qc0QlbsP-fUsoj0/view?usp=drivesdk", 
+    note: "  تفاعل الإنسان والحاسوب كاملة  " 
+  }
+], videos: [], labs: [], assignments: [] }, { name: "Operation Research", code: "MATH203", lectures: [
   { title: "Lec 1: Intro to OR", type: "pdf", link: "https://drive.google.com/file/d/1l0X6W9vEQXYAC7OOPFZS4Or-vUoSQtXc/view?usp=drivesdk", note: "بحوث العمليات واستخداماتها" },
   { title: "Lec 2: Decision Theory", type: "pdf", link: "https://drive.google.com/file/d/11GK2miG2z06Qj3suWEKO5IetBHZmqY-Y/view?usp=drivesdk", note: "نظرية اتخاذ القرار" },
   { title: "Lec 3: Certainty", type: "pdf", link: "https://drive.google.com/file/d/1oD53qJiGVwTwvo5rQIAQvrwG5aDMw4ZN/view?usp=drivesdk", note: "مفهوم التأكد" },
